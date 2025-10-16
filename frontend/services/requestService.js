@@ -1,8 +1,8 @@
-// Request Service - Manages adoption requests (mock data)
+
 const RequestService = (function() {
     'use strict';
 
-    // Mock adoption requests data
+   
     let adoptionRequests = [
         {
             id: 1,
@@ -139,27 +139,27 @@ const RequestService = (function() {
     ];
 
     return {
-        // Get all requests
+       
         getAllRequests: function() {
             return adoptionRequests;
         },
 
-        // Get requests by user ID
+       
         getRequestsByUser: function(userId) {
             return adoptionRequests.filter(req => req.user.id === userId);
         },
 
-        // Get requests by status
+        
         getRequestsByStatus: function(status) {
             return adoptionRequests.filter(req => req.status === status);
         },
 
-        // Get request by ID
+        
         getRequestById: function(id) {
             return adoptionRequests.find(req => req.id === parseInt(id));
         },
 
-        // Create new request
+        
         createRequest: function(userId, petId) {
             const user = AuthService.getCurrentUser();
             const pet = PetService.getPetById(petId);
@@ -199,7 +199,7 @@ const RequestService = (function() {
             return { success: true, request: newRequest };
         },
 
-        // Update request status (admin only)
+       
         updateRequestStatus: function(requestId, status, notes) {
             const request = this.getRequestById(requestId);
 
@@ -215,7 +215,7 @@ const RequestService = (function() {
             return { success: true, request: request };
         },
 
-        // Cancel request
+      
         cancelRequest: function(requestId) {
             const index = adoptionRequests.findIndex(req => req.id === parseInt(requestId));
 
@@ -227,7 +227,7 @@ const RequestService = (function() {
             return { success: true };
         },
 
-        // Get statistics
+       
         getStatistics: function() {
             return {
                 total: adoptionRequests.length,

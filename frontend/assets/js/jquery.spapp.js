@@ -1,8 +1,4 @@
-/*!
- * SPApp - Single Page Application micro framework
- * https://github.com/spappjs/spapp
- * Version: 2.0.0
- */
+
 ;(function($) {
     'use strict';
 
@@ -15,25 +11,25 @@
         _anchors: {},
 
         init: function(config) {
-            // Store configuration
+           
             this._routeDefault = config.defaultView || '';
             this._routeError = config.errorView || '';
             this._anchors = config.anchors || {};
 
-            // Initialize routes
+           
             if (config.routes) {
                 for (var route in config.routes) {
                     this._routes[route] = config.routes[route];
                 }
             }
 
-            // Set up hash change listener
+           
             var self = this;
             $(window).on('hashchange', function() {
                 self.run();
             });
 
-            // Set up link click handlers
+           
             $(document).on('click', 'a[href^="#"]', function(e) {
                 var href = $(this).attr('href');
                 if (href && href !== '#') {
@@ -41,7 +37,7 @@
                 }
             });
 
-            // Initial run
+            
             this.run();
 
             return this;
@@ -63,7 +59,7 @@
         run: function() {
             var hash = window.location.hash.replace('#', '').split('?')[0].split('/')[0] || this._routeDefault;
 
-            // Find matching route
+           
             var route = this._routes[hash];
 
             if (!route && this._routeError) {
@@ -76,12 +72,12 @@
                 return;
             }
 
-            // Call onCreate if defined
+            
             if (route.onCreate && typeof route.onCreate === 'function') {
                 route.onCreate();
             }
 
-            // Load view
+           
             if (route.load) {
                 var container = this._anchors.main || '#main';
                 var self = this;
@@ -92,12 +88,12 @@
                         return;
                     }
 
-                    // Call onReady if defined
+                   
                     if (route.onReady && typeof route.onReady === 'function') {
                         route.onReady();
                     }
 
-                    // Scroll to top
+                   
                     window.scrollTo(0, 0);
                 });
             }
@@ -117,7 +113,7 @@
         }
     };
 
-    // Expose SPApp to jQuery
+    
     $.spapp = app;
 
 })(jQuery);

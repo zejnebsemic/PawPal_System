@@ -1,8 +1,8 @@
-// Authentication Service - Manages user authentication and authorization
+
 const AuthService = (function() {
     'use strict';
 
-    // Demo users (in a real app, this would be handled by backend API)
+    
     const users = [
         {
             id: 1,
@@ -20,10 +20,10 @@ const AuthService = (function() {
         }
     ];
 
-    // Current user session
+   
     let currentUser = null;
 
-    // Initialize - check for existing session
+   
     function init() {
         const savedUser = localStorage.getItem('currentUser');
         if (savedUser) {
@@ -37,15 +37,15 @@ const AuthService = (function() {
     }
 
     return {
-        // Initialize authentication service
+       
         init: init,
 
-        // Login user
+      
         login: function(email, password) {
             const user = users.find(u => u.email === email && u.password === password);
 
             if (user) {
-                // Don't store password in session
+               
                 currentUser = {
                     id: user.id,
                     name: user.name,
@@ -60,16 +60,16 @@ const AuthService = (function() {
             return { success: false, message: 'Invalid email or password' };
         },
 
-        // Register new user
+       
         register: function(name, email, password) {
-            // Check if user already exists
+            
             const existingUser = users.find(u => u.email === email);
 
             if (existingUser) {
                 return { success: false, message: 'Email already registered' };
             }
 
-            // Create new user (in real app, this would save to database)
+            
             const newUser = {
                 id: users.length + 1,
                 name: name,
@@ -80,7 +80,7 @@ const AuthService = (function() {
 
             users.push(newUser);
 
-            // Log in the new user
+            
             currentUser = {
                 id: newUser.id,
                 name: newUser.name,
@@ -92,33 +92,33 @@ const AuthService = (function() {
             return { success: true, user: currentUser };
         },
 
-        // Logout user
+       
         logout: function() {
             currentUser = null;
             localStorage.removeItem('currentUser');
         },
 
-        // Get current user
+        
         getCurrentUser: function() {
             return currentUser;
         },
 
-        // Check if user is logged in
+       
         isLoggedIn: function() {
             return currentUser !== null;
         },
 
-        // Check if current user is admin
+       
         isAdmin: function() {
             return currentUser && currentUser.role === 'admin';
         },
 
-        // Check if user has required role
+       
         hasRole: function(role) {
             return currentUser && currentUser.role === role;
         },
 
-        // Require login (redirect if not logged in)
+       
         requireLogin: function() {
             if (!this.isLoggedIn()) {
                 alert('Please log in to access this page');
@@ -128,7 +128,7 @@ const AuthService = (function() {
             return true;
         },
 
-        // Require admin (redirect if not admin)
+        
         requireAdmin: function() {
             if (!this.isLoggedIn()) {
                 alert('Please log in to access this page');
@@ -145,16 +145,16 @@ const AuthService = (function() {
             return true;
         },
 
-        // Update user profile
+       
         updateProfile: function(updates) {
             if (!currentUser) {
                 return { success: false, message: 'No user logged in' };
             }
 
-            // Update current user
+            
             Object.assign(currentUser, updates);
 
-            // Save to localStorage
+           
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
 
             return { success: true, user: currentUser };
@@ -162,5 +162,5 @@ const AuthService = (function() {
     };
 })();
 
-// Initialize auth service
+
 AuthService.init();

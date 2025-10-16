@@ -1,8 +1,8 @@
-// Pet Service - Manages pet data for the application
+
 const PetService = (function() {
     'use strict';
 
-    // Pet database
+    
     const pets = [
         {
             id: 1,
@@ -190,7 +190,7 @@ const PetService = (function() {
         }
     ];
 
-    // Shelter information
+    
     const shelters = {
         'City Shelter': {
             id: 1,
@@ -227,27 +227,27 @@ const PetService = (function() {
     };
 
     return {
-        // Get all pets
+        
         getAllPets: function() {
             return pets;
         },
 
-        // Get pet by ID
+        
         getPetById: function(id) {
             return pets.find(pet => pet.id === parseInt(id));
         },
 
-        // Get shelter information
+        
         getShelterInfo: function(shelterName) {
             return shelters[shelterName];
         },
 
-        // Get available pets only
+       
         getAvailablePets: function() {
             return pets.filter(pet => pet.status === 'Available');
         },
 
-        // Filter pets
+        
         filterPets: function(filters) {
             return pets.filter(pet => {
                 if (filters.type && pet.type.toLowerCase() !== filters.type.toLowerCase()) return false;

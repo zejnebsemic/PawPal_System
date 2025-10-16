@@ -1,10 +1,9 @@
-// PawFinder Pet Adoption SPA Application
-// Using jQuery SPApp for routing
+
 
 $(document).ready(function() {
     'use strict';
 
-    // Initialize SPApp with routes
+   
     $.spapp.init({
         defaultView: 'home',
         anchors: {
@@ -13,14 +12,14 @@ $(document).ready(function() {
         routes: {
             'home': {
                 view: 'home',
-                load: 'frontend/pages/home.html',
+                load: 'pages/home.html',
                 onCreate: function() {
                     updateNavigation();
                 }
             },
             'browse': {
                 view: 'browse',
-                load: 'frontend/pages/browse.html',
+                load: 'pages/browse.html',
                 onCreate: function() {
                     updateNavigation();
                 },
@@ -30,7 +29,7 @@ $(document).ready(function() {
             },
             'pet-detail': {
                 view: 'pet-detail',
-                load: 'frontend/pages/pet-detail.html',
+                load: 'pages/pet-detail.html',
                 onCreate: function() {
                     updateNavigation();
                 },
@@ -40,14 +39,14 @@ $(document).ready(function() {
             },
             'shelters': {
                 view: 'shelters',
-                load: 'frontend/pages/shelters.html',
+                load: 'pages/shelters.html',
                 onCreate: function() {
                     updateNavigation();
                 }
             },
             'reviews': {
                 view: 'reviews',
-                load: 'frontend/pages/reviews.html',
+                load: 'pages/reviews.html',
                 onCreate: function() {
                     updateNavigation();
                 },
@@ -57,7 +56,7 @@ $(document).ready(function() {
             },
             'login': {
                 view: 'login',
-                load: 'frontend/pages/login.html',
+                load: 'pages/login.html',
                 onCreate: function() {
                     updateNavigation();
                 },
@@ -67,7 +66,7 @@ $(document).ready(function() {
             },
             'register': {
                 view: 'register',
-                load: 'frontend/pages/register.html',
+                load: 'pages/register.html',
                 onCreate: function() {
                     updateNavigation();
                 },
@@ -77,7 +76,7 @@ $(document).ready(function() {
             },
             'profile': {
                 view: 'profile',
-                load: 'frontend/pages/profile.html',
+                load: 'pages/profile.html',
                 onCreate: function() {
                     if (!AuthService.requireLogin()) return;
                     updateNavigation();
@@ -88,7 +87,7 @@ $(document).ready(function() {
             },
             'requests': {
                 view: 'requests',
-                load: 'frontend/pages/requests.html',
+                load: 'pages/requests.html',
                 onCreate: function() {
                     if (!AuthService.requireLogin()) return;
                     updateNavigation();
@@ -99,7 +98,7 @@ $(document).ready(function() {
             },
             'admin': {
                 view: 'admin',
-                load: 'frontend/pages/admin.html',
+                load: 'pages/admin.html',
                 onCreate: function() {
                     if (!AuthService.requireAdmin()) return;
                     updateNavigation();
@@ -111,7 +110,7 @@ $(document).ready(function() {
         }
     });
 
-    // Update navigation bar based on auth state
+    
     function updateNavigation() {
         const currentUser = AuthService.getCurrentUser();
 
@@ -134,13 +133,13 @@ $(document).ready(function() {
             $('#nav-admin').hide();
         }
 
-        // Update active nav link
+       
         const currentController = $.spapp.getCurrentController();
         $('.nav-link').removeClass('active');
         $('a[href="#' + currentController + '"]').addClass('active');
     }
 
-    // Logout handler
+   
     $('#logout-btn').on('click', function(e) {
         e.preventDefault();
         AuthService.logout();
@@ -148,7 +147,6 @@ $(document).ready(function() {
         window.location.hash = '#home';
     });
 
-    // Initialize Login Page
     function initLoginPage() {
         $('#login-form').on('submit', function(e) {
             e.preventDefault();
@@ -167,7 +165,7 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize Register Page
+   
     function initRegisterPage() {
         $('#register-form').on('submit', function(e) {
             e.preventDefault();
@@ -193,9 +191,9 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize Browse Page
+   
     function initBrowsePage() {
-        // Add click handlers to pet cards
+      
         $(document).on('click', '.pet-card', function(e) {
             if (!$(e.target).closest('.adopt-btn').length) {
                 const petId = $(this).data('pet-id');
@@ -204,14 +202,14 @@ $(document).ready(function() {
             }
         });
 
-        // Add adoption button handlers
+       
         $(document).on('click', '.adopt-btn', function(e) {
             e.stopPropagation();
             const petId = $(this).data('pet-id');
             requestAdoption(petId);
         });
 
-        // Add filter handlers
+       
         $('.filter-input').on('change', function() {
             filterPets();
         });
@@ -221,7 +219,7 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize Pet Detail Page
+   
     function initPetDetailPage() {
         const petId = sessionStorage.getItem('currentPetId');
 
@@ -239,44 +237,44 @@ $(document).ready(function() {
             return;
         }
 
-        // Update page content with pet data
+       
         updatePetDetailPage(pet);
 
-        // Add adoption button handler
+       
         $('#adopt-btn').on('click', function() {
             requestAdoption(pet.id);
         });
     }
 
-    // Update pet detail page with actual pet data
+   
     function updatePetDetailPage(pet) {
         const container = $('#app-content');
 
-        // Update breadcrumb
+       
         container.find('.breadcrumb-item.active').text(pet.name);
 
-        // Update main image
+        
         container.find('.card-img-top').first().attr('src', pet.image).attr('alt', pet.name);
 
-        // Update pet name and details
+        
         container.find('.display-5').text(pet.name);
         container.find('.badge.bg-primary').text(pet.type);
         container.find('.badge.bg-success, .badge.bg-warning').removeClass('bg-success bg-warning')
             .addClass(pet.status === 'Available' ? 'bg-success' : 'bg-warning')
             .text(pet.status);
 
-        // Update stats
+       
         const stats = container.find('.stat-icon').parent().parent();
         stats.eq(0).find('strong').text(pet.age + ' years');
         stats.eq(1).find('strong').text(pet.size);
         stats.eq(2).find('strong').text(pet.gender);
         stats.eq(3).find('strong').text(pet.shelter);
 
-        // Update description
+        
         container.find('h4:contains("About")').next('p').text(pet.fullDescription.split('.')[0] + '.');
         container.find('h4:contains("About")').next('p').next('p').text(pet.fullDescription.split('.').slice(1).join('.'));
 
-        // Update shelter info
+        
         const shelterInfo = PetService.getShelterInfo(pet.shelter);
         if (shelterInfo) {
             const shelterSection = container.find('h4:contains("Shelter Information")');
@@ -288,7 +286,7 @@ $(document).ready(function() {
             shelterList.eq(3).html('<i class="bi bi-clock-fill text-primary me-2"></i>' + shelterInfo.hours);
         }
 
-        // Update medical history
+        
         if (pet.medicalHistory) {
             const medicalList = container.find('h4:contains("Medical History")').parent().find('ul li');
             medicalList.eq(0).find('strong').next().text(pet.medicalHistory.vaccinations);
@@ -299,7 +297,7 @@ $(document).ready(function() {
         }
     }
 
-    // Filter pets
+    
     function filterPets() {
         const filters = {
             type: $('#pet-type').val(),
@@ -311,10 +309,10 @@ $(document).ready(function() {
 
         const filteredPets = PetService.filterPets(filters);
 
-        // Update pet count
+       
         $('.text-muted strong').first().text(filteredPets.length);
 
-        // Show/hide pet cards
+       
         $('.pet-card').each(function() {
             const petId = $(this).data('pet-id');
             const pet = PetService.getPetById(petId);
@@ -327,7 +325,7 @@ $(document).ready(function() {
         });
     }
 
-    // Request adoption
+    
     function requestAdoption(petId) {
         if (!AuthService.isLoggedIn()) {
             alert('Please log in to request adoption');
@@ -347,7 +345,7 @@ $(document).ready(function() {
         }
     }
 
-    // Initialize Profile Page
+    
     function initProfilePage() {
         const user = AuthService.getCurrentUser();
 
@@ -374,7 +372,7 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize Reviews Page
+   
     function initReviewsPage() {
         const stars = $('.star-rating i');
 
@@ -409,12 +407,12 @@ $(document).ready(function() {
         $('#rating-value').val(rating);
     }
 
-    // Initialize Admin Page
+    
     function initAdminPage() {
-        // Load and display adoption requests
+       
         loadAdminRequests();
 
-        // Add approve/reject handlers
+      
         $(document).on('click', '.approve-btn', function() {
             const requestId = $(this).data('request-id');
             if (confirm('Approve this adoption request?')) {
@@ -422,7 +420,7 @@ $(document).ready(function() {
 
                 if (result.success) {
                     alert('Request approved successfully!');
-                    loadAdminRequests(); // Reload the requests table
+                    loadAdminRequests(); 
                 } else {
                     alert('Failed to approve request: ' + result.message);
                 }
@@ -436,7 +434,7 @@ $(document).ready(function() {
 
                 if (result.success) {
                     alert('Request rejected');
-                    loadAdminRequests(); // Reload the requests table
+                    loadAdminRequests(); 
                 } else {
                     alert('Failed to reject request: ' + result.message);
                 }
@@ -444,16 +442,16 @@ $(document).ready(function() {
         });
     }
 
-    // Load admin requests table
+    
     function loadAdminRequests() {
         const requests = RequestService.getAllRequests();
         const stats = RequestService.getStatistics();
 
-        // Update statistics
+       
         $('#admin-pending-count').text(stats.pending);
         $('#admin-total-pets').text(PetService.getAllPets().length);
 
-        // Clear and rebuild requests table
+        
         const tbody = $('#admin-requests-table tbody');
         tbody.empty();
 
@@ -508,15 +506,15 @@ $(document).ready(function() {
         });
     }
 
-    // Initialize Requests Page (for regular users)
+    
     function initRequestsPage() {
         const user = AuthService.getCurrentUser();
         if (!user) return;
 
-        // Load user's requests
+       
         loadUserRequests(user.id);
 
-        // Add cancel request handlers
+        
         $(document).on('click', '.cancel-request-btn', function() {
             const requestId = $(this).data('request-id');
             if (confirm('Are you sure you want to cancel this adoption request?')) {
@@ -532,11 +530,11 @@ $(document).ready(function() {
         });
     }
 
-    // Load user's adoption requests
+   
     function loadUserRequests(userId) {
         const requests = RequestService.getRequestsByUser(userId);
 
-        // Update stats (filter by user)
+        
         const userStats = {
             total: requests.length,
             pending: requests.filter(r => r.status === 'pending').length,
@@ -544,19 +542,19 @@ $(document).ready(function() {
             rejected: requests.filter(r => r.status === 'rejected').length
         };
 
-        // Update stat cards
+       
         $('.stat-card h3').eq(0).text(userStats.total);
         $('.stat-card h3').eq(1).text(userStats.pending);
         $('.stat-card h3').eq(2).text(userStats.approved);
         $('.stat-card h3').eq(3).text(userStats.rejected);
 
-        // Show empty state if no requests
+        
         if (requests.length === 0) {
             $('#empty-state').removeClass('d-none');
             $('.tab-content .card').remove();
         }
     }
 
-    // Initialize on page load
+    
     updateNavigation();
 });
