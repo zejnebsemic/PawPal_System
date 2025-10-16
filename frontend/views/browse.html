@@ -1,0 +1,294 @@
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Browse Available Pets</h1>
+        <p class="lead text-muted">Find your perfect companion from our available pets</p>
+    </div>
+
+  
+    <div class="filter-section">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Pet Type</label>
+                <select class="form-select filter-input" id="pet-type">
+                    <option value="">All Types</option>
+                    <option value="dog">Dogs</option>
+                    <option value="cat">Cats</option>
+                    <option value="bird">Birds</option>
+                    <option value="rabbit">Rabbits</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Age</label>
+                <select class="form-select filter-input" id="age">
+                    <option value="">All Ages</option>
+                    <option value="young">Young (0-1 years)</option>
+                    <option value="adult">Adult (1-7 years)</option>
+                    <option value="senior">Senior (7+ years)</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Size</label>
+                <select class="form-select filter-input" id="size">
+                    <option value="">All Sizes</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-semibold">Shelter</label>
+                <select class="form-select filter-input" id="shelter">
+                    <option value="">All Shelters</option>
+                    <option value="city">City Shelter</option>
+                    <option value="paws">Paws & Claws</option>
+                    <option value="happy">Happy Tails</option>
+                    <option value="rescue">Rescue Haven</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <div class="search-bar">
+                    <i class="bi bi-search"></i>
+                    <input type="text" class="form-control" id="search" placeholder="Search by name or description...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <p class="text-muted mb-0">
+            <strong>24</strong> pets available for adoption
+        </p>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-secondary active">
+                <i class="bi bi-grid-3x3-gap"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+                <i class="bi bi-list-ul"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row g-4" id="pets-grid">
+ 
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="1">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=300&fit=crop" class="card-img-top" alt="Max">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Max</h5>
+                        <span class="badge bg-primary">Dog</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>City Shelter
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">3 years</span>
+                        <span class="badge bg-light text-dark">Large</span>
+                    </div>
+                    <p class="card-text small">Friendly golden retriever, great with kids and other pets.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="1">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="2">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop" class="card-img-top" alt="Luna">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Luna</h5>
+                        <span class="badge bg-secondary">Cat</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>Paws & Claws
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">2 years</span>
+                        <span class="badge bg-light text-dark">Medium</span>
+                    </div>
+                    <p class="card-text small">Gentle Persian cat, loves to cuddle and very affectionate.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="2">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="3">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop" class="card-img-top" alt="Buddy">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Buddy</h5>
+                        <span class="badge bg-primary">Dog</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>Happy Tails
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">4 years</span>
+                        <span class="badge bg-light text-dark">Medium</span>
+                    </div>
+                    <p class="card-text small">Energetic beagle, loves outdoor activities and walks.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="3">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="4">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1573865526739-10c1d3a1f0e3?w=400&h=300&fit=crop" class="card-img-top" alt="Mittens">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Mittens</h5>
+                        <span class="badge bg-secondary">Cat</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>Rescue Haven
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">1 year</span>
+                        <span class="badge bg-light text-dark">Small</span>
+                    </div>
+                    <p class="card-text small">Playful tabby cat, good with other pets and children.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="4">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="5">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop" class="card-img-top" alt="Charlie">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Charlie</h5>
+                        <span class="badge bg-primary">Dog</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>City Shelter
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">5 years</span>
+                        <span class="badge bg-light text-dark">Medium</span>
+                    </div>
+                    <p class="card-text small">Loyal companion, well-trained and house-broken.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="5">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+
+      
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="6">
+                <span class="badge bg-warning pet-status">Pending</span>
+                <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400&h=300&fit=crop" class="card-img-top" alt="Whiskers">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Whiskers</h5>
+                        <span class="badge bg-secondary">Cat</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>Paws & Claws
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">6 years</span>
+                        <span class="badge bg-light text-dark">Medium</span>
+                    </div>
+                    <p class="card-text small">Independent senior cat, low maintenance and calm.</p>
+                    <button class="btn btn-secondary w-100" disabled>
+                        <i class="bi bi-clock me-1"></i>Adoption Pending
+                    </button>
+                </div>
+            </div>
+        </div>
+
+     
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="7">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&h=300&fit=crop" class="card-img-top" alt="Rocky">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Rocky</h5>
+                        <span class="badge bg-primary">Dog</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>Happy Tails
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">2 years</span>
+                        <span class="badge bg-light text-dark">Large</span>
+                    </div>
+                    <p class="card-text small">Protective and loyal German Shepherd, needs active owner.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="7">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card pet-card" data-pet-id="8">
+                <span class="badge bg-success pet-status">Available</span>
+                <img src="https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=400&h=300&fit=crop" class="card-img-top" alt="Bella">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">Bella</h5>
+                        <span class="badge bg-secondary">Cat</span>
+                    </div>
+                    <p class="text-muted small mb-2">
+                        <i class="bi bi-geo-alt me-1"></i>Rescue Haven
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge bg-light text-dark me-1">3 years</span>
+                        <span class="badge bg-light text-dark">Small</span>
+                    </div>
+                    <p class="card-text small">Sweet Siamese cat, talkative and loves attention.</p>
+                    <button class="btn btn-primary w-100 adopt-btn" data-pet-id="8">
+                        <i class="bi bi-heart me-1"></i>Adopt Me
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>

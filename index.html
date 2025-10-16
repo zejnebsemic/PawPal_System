@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawFinder - Pet Adoption Platform</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="frontend/css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#" data-page="home">
+                <i class="bi bi-heart-fill text-primary me-2 fs-4"></i>
+                <span class="fw-bold text-primary">PawFinder</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="browse">Browse Pets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="shelters">Shelters</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="reviews">Reviews</a>
+                    </li>
+                    <li class="nav-item" id="nav-requests" style="display: none;">
+                        <a class="nav-link" href="#" data-page="requests">My Requests</a>
+                    </li>
+                    <li class="nav-item" id="nav-admin" style="display: none;">
+                        <a class="nav-link" href="#" data-page="admin">
+                            <i class="bi bi-shield-check me-1"></i>Admin
+                        </a>
+                    </li>
+                    <li class="nav-item" id="nav-profile" style="display: none;">
+                        <a class="nav-link" href="#" data-page="profile">
+                            <i class="bi bi-person-circle me-1"></i>Profile
+                        </a>
+                    </li>
+                    <li class="nav-item" id="nav-login">
+                        <a class="nav-link btn btn-outline-primary px-3 ms-2" href="#" data-page="login">Login</a>
+                    </li>
+                    <li class="nav-item" id="nav-logout" style="display: none;">
+                        <a class="nav-link btn btn-outline-danger px-3 ms-2" href="#" id="logout-btn">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div id="app-content">
+        <!-- Dynamic content will be loaded here -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-3">
+                        <i class="bi bi-heart-fill text-primary me-2"></i>PawFinder
+                    </h5>
+                    <p class="text-muted">Connecting loving homes with pets in need. Every adoption changes two lives.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" data-page="browse" class="text-muted text-decoration-none">Browse Pets</a></li>
+                        <li><a href="#" data-page="shelters" class="text-muted text-decoration-none">Find Shelters</a></li>
+                        <li><a href="#" data-page="reviews" class="text-muted text-decoration-none">Reviews</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-3">Connect With Us</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-muted"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-muted"><i class="bi bi-twitter fs-4"></i></a>
+                        <a href="#" class="text-muted"><i class="bi bi-instagram fs-4"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="text-center text-muted">
+                <p>&copy; 2024 PawFinder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="frontend/js/app.js"></script>
+</body>
+</html>
