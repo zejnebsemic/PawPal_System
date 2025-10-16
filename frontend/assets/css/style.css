@@ -347,3 +347,24 @@ body {
 .page-transition {
     animation: fadeIn 0.3s ease-out;
 }
+
+/* Footer Improvements */
+footer a.hover-primary:hover {
+    color: var(--primary-color) !important;
+    transition: color 0.3s ease;
+}
+
+footer {
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Body Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#app-content {
+    flex: 1;
+}
