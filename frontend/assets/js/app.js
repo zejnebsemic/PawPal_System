@@ -30,7 +30,7 @@ $(document).ready(function() {
             'pet-detail': {
                 view: 'pet-detail',
                 load: 'pages/pet-detail.html',
-                onCreate: function() {
+                onReady: function() {
                     updateNavigation();
                 },
                 onReady: function() {
@@ -558,3 +558,4 @@ $(document).ready(function() {
     
     updateNavigation();
 });
+

@@ -63,7 +63,7 @@ const RequestService = (function() {
                 breed: 'Beagle',
                 age: 4,
                 type: 'Dog',
-                image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=200&h=150&fit=crop'
+                image: '/frontend/assets/images/buddy.jpeg'
             },
             shelter: 'Happy Tails',
             dateApplied: 'Jan 16, 2024',
@@ -107,7 +107,7 @@ const RequestService = (function() {
                 breed: 'Mixed Breed',
                 age: 5,
                 type: 'Dog',
-                image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=200&h=150&fit=crop'
+                image: '/frontend/assets/images/charlie.jpeg'
             },
             shelter: 'City Shelter',
             dateApplied: 'Jan 12, 2024',
@@ -129,7 +129,7 @@ const RequestService = (function() {
                 breed: 'German Shepherd',
                 age: 2,
                 type: 'Dog',
-                image: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=200&h=150&fit=crop'
+                image: '/frontend/assets/images/rocky.jpeg'
             },
             shelter: 'Happy Tails',
             dateApplied: 'Jan 10, 2024',

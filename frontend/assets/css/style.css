@@ -35,13 +35,13 @@ body {
     position: relative;
 }
 
-.nav-link:hover {
+/* .nav-link:hover {
     color: var(--primary-color) !important;
-}
+} */
 
-.nav-link.active {
+/* .nav-link.active {
     color: var(--primary-color) !important;
-}
+} */
 
 
 .btn-primary {

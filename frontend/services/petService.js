@@ -14,7 +14,7 @@ const PetService = (function() {
             gender: 'Male',
             shelter: 'City Shelter',
             status: 'Available',
-            image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/max.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=300&fit=crop',
             description: 'Friendly golden retriever, great with kids and other pets.',
             fullDescription: 'Max is a friendly and energetic Golden Retriever who loves to play and go on long walks. He\'s great with children and other pets, making him the perfect family companion. Max is house-trained, knows basic commands, and is up to date on all vaccinations. He enjoys outdoor activities, playing fetch, and swimming. Max would thrive in a home with a yard where he can run and play.',
@@ -50,7 +50,7 @@ const PetService = (function() {
                 specialNeeds: 'None'
             }
         },
-        
+
         {
             id: 3,
             name: 'Buddy',
@@ -61,7 +61,7 @@ const PetService = (function() {
             gender: 'Male',
             shelter: 'Happy Tails',
             status: 'Available',
-            image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/buddy.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop',
             description: 'Energetic beagle, loves outdoor activities and walks.',
             fullDescription: 'Buddy is an energetic Beagle who loves outdoor adventures and long walks. He\'s curious, friendly, and gets along well with other dogs. Buddy is house-trained and knows basic commands. He would be perfect for an active family who enjoys the outdoors.',
@@ -84,7 +84,7 @@ const PetService = (function() {
             gender: 'Female',
             shelter: 'Rescue Haven',
             status: 'Available',
-            image: 'https://images.unsplash.com/photo-1573865526739-10c1d3a1f0e3?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/mittens.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1573865526739-10c1d3a1f0e3?w=400&h=300&fit=crop',
             description: 'Playful tabby cat, good with other pets and children.',
             fullDescription: 'Mittens is a playful young tabby cat who loves to chase toys and explore. She\'s friendly with children and other pets, making her a great addition to any family. Mittens is litter trained and very social.',
@@ -107,7 +107,7 @@ const PetService = (function() {
             gender: 'Male',
             shelter: 'City Shelter',
             status: 'Available',
-            image: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/charlie.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=300&fit=crop',
             description: 'Loyal companion, well-trained and house-broken.',
             fullDescription: 'Charlie is a loyal and well-trained companion. He\'s calm, obedient, and perfect for someone looking for a mature dog. Charlie is house-broken and knows many commands. He loves gentle walks and cuddling on the couch.',
@@ -122,25 +122,25 @@ const PetService = (function() {
         },
         {
             id: 6,
-            name: 'Whiskers',
-            type: 'Cat',
-            breed: 'Senior Cat',
-            age: 6,
-            size: 'Medium',
-            gender: 'Male',
+            name: 'Coco',
+            type: 'Bird',
+            breed: 'Parrot',
+            age: 1,
+            size: 'Small',
+            gender: 'Female',
             shelter: 'Paws & Claws',
             status: 'Pending',
-            image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/coco.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400&h=300&fit=crop',
-            description: 'Independent senior cat, low maintenance and calm.',
-            fullDescription: 'Whiskers is an independent senior cat who enjoys a quiet life. He\'s low maintenance, calm, and perfect for someone looking for a relaxed companion. Whiskers is litter trained and enjoys lounging in sunny spots.',
+            description: 'Young and curious parrot, playful and enjoys social interaction.',
+            fullDescription: 'Coco is a lively one-year-old parrot full of personality and charm. She\ loves to chat, mimic sounds, and spend time with people.Curious and playful, Coco enjoys exploring her surroundings and learning new tricks. She’s a wonderful choice for someone looking for an interactive and cheerful companion.',
             characteristics: ['Litter Trained', 'Independent', 'Calm', 'Vaccinated', 'Neutered'],
             medicalHistory: {
                 vaccinations: 'All up to date',
                 spayedNeutered: true,
                 microchipped: true,
                 healthStatus: 'Good',
-                specialNeeds: 'Senior diet recommended'
+                specialNeeds: 'None'
             }
         },
         {
@@ -153,7 +153,7 @@ const PetService = (function() {
             gender: 'Male',
             shelter: 'Happy Tails',
             status: 'Available',
-            image: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/rocky.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=400&h=300&fit=crop',
             description: 'Protective and loyal German Shepherd, needs active owner.',
             fullDescription: 'Rocky is a protective and loyal German Shepherd who needs an active and experienced owner. He\'s intelligent, trainable, and would make an excellent guard dog. Rocky needs regular exercise and mental stimulation.',
@@ -167,26 +167,26 @@ const PetService = (function() {
             }
         },
         {
-            id: 8,
-            name: 'Bella',
-            type: 'Cat',
-            breed: 'Siamese',
-            age: 3,
-            size: 'Small',
-            gender: 'Female',
-            shelter: 'Rescue Haven',
-            status: 'Available',
-            image: 'https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=800&h=600&fit=crop',
-            thumbnail: 'https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=400&h=300&fit=crop',
-            description: 'Sweet Siamese cat, talkative and loves attention.',
-            fullDescription: 'Bella is a sweet and talkative Siamese cat who loves attention. She\'ll follow you around the house and chat with you throughout the day. Bella is perfect for someone who wants an interactive and affectionate companion.',
-            characteristics: ['Litter Trained', 'Talkative', 'Affectionate', 'Vaccinated', 'Spayed'],
-            medicalHistory: {
-                vaccinations: 'All up to date',
-                spayedNeutered: true,
-                microchipped: true,
-                healthStatus: 'Excellent',
-                specialNeeds: 'None'
+            id: 9,
+    name: 'Thumper',
+    type: 'Rabbit',
+    breed: 'Mini Lop',
+    age: 2,
+    size: 'Small',
+    gender: 'Male',
+    shelter: 'Rescue Haven',
+    status: 'Available',
+    image: '/frontend/assets/images/thumper.jpeg',
+    thumbnail: 'https://images.unsplash.com/photo-1583337130417-3346a1afdd0e?w=400&h=300&fit=crop',
+    description: 'Gentle Mini Lop rabbit who loves cuddles and quiet spaces.',
+    fullDescription: 'Thumper is a gentle and affectionate Mini Lop rabbit. He enjoys being held, loves quiet spaces, and feels most at ease when surrounded by calm people. Perfect for someone looking for a peaceful and loving companion.',
+    characteristics: ['Litter Trained', 'Gentle', 'Affectionate', 'Vaccinated'],
+    medicalHistory: {
+        vaccinations: 'All up to date',
+        spayedNeutered: true,
+        microchipped: false,
+        healthStatus: 'Excellent',
+        specialNeeds: 'None'
             }
         }
     ];
