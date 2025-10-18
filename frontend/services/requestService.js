@@ -19,7 +19,7 @@ const RequestService = (function() {
                 breed: 'Golden Retriever',
                 age: 3,
                 type: 'Dog',
-                image: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=200&h=150&fit=crop'
+                image: '/fronte'
             },
             shelter: 'City Shelter',
             dateApplied: 'Jan 15, 2024',
@@ -85,7 +85,7 @@ const RequestService = (function() {
                 breed: 'Tabby Cat',
                 age: 1,
                 type: 'Cat',
-                image: 'https://images.unsplash.com/photo-1573865526739-10c1d3a1f0e3?w=200&h=150&fit=crop'
+                image: './frontend/assets/images/mittens.jpeg'
             },
             shelter: 'Rescue Haven',
             dateApplied: 'Jan 14, 2024',

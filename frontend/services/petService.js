@@ -37,7 +37,7 @@ const PetService = (function() {
             gender: 'Female',
             shelter: 'Paws & Claws',
             status: 'Available',
-            image: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800&h=600&fit=crop',
+            image: '/frontend/assets/images/luna.jpeg',
             thumbnail: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop',
             description: 'Gentle Persian cat, loves to cuddle and very affectionate.',
             fullDescription: 'Luna is a beautiful Persian cat with a gentle and affectionate nature. She loves to cuddle on the couch and will purr contentedly for hours. Luna is perfect for a calm household and enjoys a quiet environment. She\'s litter trained and up to date on all vaccinations.',
@@ -50,6 +50,7 @@ const PetService = (function() {
                 specialNeeds: 'None'
             }
         },
+        
         {
             id: 3,
             name: 'Buddy',
