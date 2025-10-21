@@ -1,0 +1,309 @@
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Adoption Reviews</h1>
+        <p class="lead text-muted">Read success stories from our happy adopters</p>
+    </div>
+
+   
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <h2 class="fw-bold text-primary mb-2">4.8</h2>
+                <div class="stars mb-2">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i>
+                </div>
+                <p class="text-muted mb-0">Average Rating</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <h2 class="fw-bold text-primary mb-2">1,247</h2>
+                <p class="text-muted mb-0">Total Reviews</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <h2 class="fw-bold text-primary mb-2">98%</h2>
+                <p class="text-muted mb-0">Satisfaction Rate</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card text-center">
+                <h2 class="fw-bold text-primary mb-2">4.5</h2>
+                <p class="text-muted mb-0">Support Rating</p>
+            </div>
+        </div>
+    </div>
+
+    <!--Review Section -->
+    <div class="card mb-5">
+        <div class="card-body p-4">
+            <h4 class="fw-bold mb-4">
+                <i class="bi bi-pencil-square text-primary me-2"></i>Share Your Experience
+            </h4>
+            <form id="review-form">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Pet Adopted</label>
+                        <input type="text" class="form-control" placeholder="Pet's name" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Rating</label>
+                        <div class="star-rating fs-3">
+                            <i class="bi bi-star cursor-pointer"></i>
+                            <i class="bi bi-star cursor-pointer"></i>
+                            <i class="bi bi-star cursor-pointer"></i>
+                            <i class="bi bi-star cursor-pointer"></i>
+                            <i class="bi bi-star cursor-pointer"></i>
+                        </div>
+                        <input type="hidden" id="rating-value" value="0">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Your Review</label>
+                        <textarea class="form-control" rows="4" placeholder="Tell us about your adoption experience..." required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send me-2"></i>Submit Review
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold mb-0">All Reviews (1,247)</h3>
+        <div class="d-flex gap-2">
+            <select class="form-select" style="width: auto;">
+                <option>All Ratings</option>
+                <option>5 Stars</option>
+                <option>4 Stars</option>
+                <option>3 Stars</option>
+                <option>2 Stars</option>
+                <option>1 Star</option>
+            </select>
+            <select class="form-select" style="width: auto;">
+                <option>Most Recent</option>
+                <option>Highest Rated</option>
+                <option>Lowest Rated</option>
+                <option>Most Helpful</option>
+            </select>
+        </div>
+    </div>
+
+    
+    <div class="row g-4">
+       
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                                <span class="fw-bold">JD</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">John Doe</h5>
+                                <div class="stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">
+                                    Adopted <strong>Max</strong> from City Shelter • 2 weeks ago
+                                </small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">Verified Adopter</span>
+                    </div>
+
+                    <p class="card-text mb-3">"We couldn't be happier with our adoption experience! Max has brought so much joy to our family. The staff at City Shelter was incredibly helpful and made sure we were the right fit for Max. The entire process was smooth and well-organized. Highly recommend PawFinder to anyone looking to adopt!"</p>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-hand-thumbs-up me-1"></i>Helpful (24)
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                                <span class="fw-bold">SM</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Sarah Miller</h5>
+                                <div class="stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">
+                                    Adopted <strong>Luna</strong> from Paws & Claws • 1 month ago
+                                </small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">Verified Adopter</span>
+                    </div>
+
+                    <p class="card-text mb-3">"Luna is the perfect addition to our home! The website made it so easy to browse available pets and learn about their personalities. The adoption process was straightforward, and the shelter staff provided excellent guidance. Thank you PawFinder for helping us find our furry friend!"</p>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-hand-thumbs-up me-1"></i>Helpful (18)
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                                <span class="fw-bold">MW</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Mike Wilson</h5>
+                                <div class="stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star"></i>
+                                </div>
+                                <small class="text-muted">
+                                    Adopted <strong>Buddy</strong> from Happy Tails • 3 weeks ago
+                                </small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">Verified Adopter</span>
+                    </div>
+
+                    <p class="card-text mb-3">"Great experience overall! Buddy is an amazing dog and fits perfectly with our lifestyle. The only reason I'm giving 4 stars instead of 5 is that the approval process took a bit longer than expected. Otherwise, everything was excellent!"</p>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-hand-thumbs-up me-1"></i>Helpful (12)
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                                <span class="fw-bold">EJ</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">Emily Johnson</h5>
+                                <div class="stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">
+                                    Adopted <strong>Mittens</strong> from Rescue Haven • 2 months ago
+                                </small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">Verified Adopter</span>
+                    </div>
+
+                    <p class="card-text mb-3">"Absolutely wonderful! The platform is user-friendly, the information provided about each pet was detailed and accurate, and the support team was responsive to all our questions. Mittens has adjusted beautifully to her new home. We're so grateful!"</p>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-hand-thumbs-up me-1"></i>Helpful (31)
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; min-width: 50px;">
+                                <span class="fw-bold">DT</span>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 fw-bold">David Thompson</h5>
+                                <div class="stars mb-2">
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                    <i class="bi bi-star-fill"></i>
+                                </div>
+                                <small class="text-muted">
+                                    Adopted <strong>Rocky</strong> from Happy Tails • 1 week ago
+                                </small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success">Verified Adopter</span>
+                    </div>
+
+                    <p class="card-text mb-3">"Outstanding service! Rocky is everything we hoped for and more. The shelter staff did an excellent job matching us with the right pet based on our lifestyle. The follow-up support after adoption has been exceptional. This is how pet adoption should be done!"</p>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-hand-thumbs-up me-1"></i>Helpful (15)
+                        </button>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-reply me-1"></i>Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+</div>

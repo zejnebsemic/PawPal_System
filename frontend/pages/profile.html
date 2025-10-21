@@ -1,0 +1,249 @@
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="mb-5">
+        <h1 class="display-4 fw-bold mb-3">My Profile</h1>
+        <p class="lead text-muted">Manage your account information and preferences</p>
+    </div>
+
+    <div class="row g-4">
+       
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100px; height: 100px;">
+                        <span class="fs-1 fw-bold">ZS</span>
+                    </div>
+                    <h5 class="fw-bold mb-1">Zejneb Semic</h5>
+                    <p class="text-muted small mb-3">zejneb@email.com</p>
+                    <span class="badge bg-primary mb-3">Admin</span>
+
+                    <hr>
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary active">
+                            <i class="bi bi-person me-2"></i>Profile Info
+                        </button>
+                        <button class="btn btn-outline-primary">
+                            <i class="bi bi-lock me-2"></i>Change Password
+                        </button>
+                        <button class="btn btn-outline-danger">
+                            <i class="bi bi-trash me-2"></i>Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">Account Stats</h6>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Member Since</small>
+                        <strong>Jan 2024</strong>
+                    </div>
+                    <div class="mb-3">
+                        <small class="text-muted d-block">Total Requests</small>
+                        <strong>5</strong>
+                    </div>
+                    <div class="mb-0">
+                        <small class="text-muted d-block">Pets Adopted</small>
+                        <strong>2</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+           
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">
+                        <i class="bi bi-person-circle text-primary me-2"></i>Personal Information
+                    </h4>
+                    <form id="profile-form">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control"  required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control"  required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control"  required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" >
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-control"  required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">City</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">State</label>
+                                <select class="form-select">
+                                    <option>NY</option>
+                                    <option>CA</option>
+                                    <option>TX</option>
+                                    <option>FL</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">ZIP Code</label>
+                                <input type="text" class="form-control" value="71000" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">About Me</label>
+                                <textarea class="form-control" rows="3" placeholder="Tell us about yourself and your pet preferences..."> </textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle me-2"></i>Save Changes
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary ms-2">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+           
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">
+                        <i class="bi bi-house-heart text-primary me-2"></i>Living Situation
+                    </h4>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Home Type</label>
+                            <select class="form-select">
+                                <option>House</option>
+                                <option>Apartment</option>
+                                <option>Condo</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Household Size</label>
+                            <select class="form-select">
+                                <option>1 person</option>
+                                <option>2 people</option>
+                                <option selected>3-4 people</option>
+                                <option>5+ people</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="has-yard" checked>
+                                <label class="form-check-label" for="has-yard">
+                                    Has a yard/outdoor space
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="has-pets">
+                                <label class="form-check-label" for="has-pets">
+                                    Already have other pets
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="has-children" checked>
+                                <label class="form-check-label" for="has-children">
+                                    Have children
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="owner-approval" checked>
+                                <label class="form-check-label" for="owner-approval">
+                                    Owner/landlord approval for pets
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>Update Information
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card mb-4">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">
+                        <i class="bi bi-heart text-primary me-2"></i>Pet Preferences
+                    </h4>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label">Preferred Pet Type</label>
+                            <div class="d-flex flex-wrap gap-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pref-dogs" checked>
+                                    <label class="form-check-label" for="pref-dogs">Dogs</label>
+                                </div>
+                                <div class="form-check ms-3">
+                                    <input class="form-check-input" type="checkbox" id="pref-cats" checked>
+                                    <label class="form-check-label" for="pref-cats">Cats</label>
+                                </div>
+                                <div class="form-check ms-3">
+                                    <input class="form-check-input" type="checkbox" id="pref-birds">
+                                    <label class="form-check-label" for="pref-birds">Birds</label>
+                                </div>
+                                <div class="form-check ms-3">
+                                    <input class="form-check-input" type="checkbox" id="pref-rabbits">
+                                    <label class="form-check-label" for="pref-rabbits">Rabbits</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Preferred Size</label>
+                            <select class="form-select">
+                                <option>No Preference</option>
+                                <option>Small</option>
+                                <option selected>Medium</option>
+                                <option>Large</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Preferred Age</label>
+                            <select class="form-select">
+                                <option>No Preference</option>
+                                <option>Young (0-1 years)</option>
+                                <option selected>Adult (1-7 years)</option>
+                                <option>Senior (7+ years)</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Special Requirements</label>
+                            <textarea class="form-control" rows="2" placeholder="Any special requirements or considerations...">Looking for pets that are good with children and preferably house-trained.</textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>Save Preferences
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+           
+        </div>
+    </div>
+</div>

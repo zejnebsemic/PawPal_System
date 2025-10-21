@@ -1,0 +1,99 @@
+
+
+/* Page Container */
+#app-content {
+    min-height: 80vh;
+    position: relative;
+}
+
+/* Loading State */
+.spapp-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.spapp-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Page Transitions */
+.spapp-page {
+    animation: spappFadeIn 0.4s ease-in-out;
+}
+
+@keyframes spappFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Route Active State */
+.nav-link[href^="#"].active {
+    color: var(--primary-color, #6366f1) !important;
+    font-weight: 600;
+}
+
+/* Error View */
+.spapp-error {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.spapp-error h1 {
+    font-size: 4rem;
+    color: #dc3545;
+    margin-bottom: 20px;
+}
+
+.spapp-error p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hide hash in URL */
+body {
+    overflow-x: hidden;
+}
+
+/* SPA Link Styles */
+a[href^="#"]:not([href="#"]) {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a[href^="#"]:not([href="#"]):hover {
+    text-decoration: underline;
+}
+
+/* Navigation Animation */
+.spapp-nav-transition {
+    transition: all 0.3s ease;
+}
+
+/* Content Container */
+.spapp-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .spapp-page {
+        animation-duration: 0.3s;
+    }
+}
