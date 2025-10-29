@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/BaseDao.class.php";
+require_once __DIR__ . "/../dao/BaseDao.class.php";
 
 class AdoptionRequestDao extends BaseDao {
     public function __construct() {

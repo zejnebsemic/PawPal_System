@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/BaseDao.class.php";
+require_once __DIR__ . "/../dao/BaseDao.class.php";
 
 class ReviewDao extends BaseDao {
     public function __construct() {
