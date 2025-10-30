@@ -19,7 +19,7 @@ class Database {
                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                    ]
                );
-               //echo "Connection finished!";
+               echo "Connection finished!";
            } catch (PDOException $e) {
                die("Connection failed: " . $e->getMessage());
            }

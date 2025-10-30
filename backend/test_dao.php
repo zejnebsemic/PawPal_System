@@ -1,11 +1,10 @@
 <?php
-require_once 'UserDao.class.php';
-require_once 'AdminDao.class.php';
-require_once 'ShelterDao.class.php';
-require_once 'PetDao.class.php';
-require_once 'AdoptionRequestDao.class.php';
-require_once 'ReviewDao.class.php';
-
+require_once __DIR__ . '/rest/dao/UserDAO.class.php';
+require_once __DIR__ . '/rest/dao/AdminDAO.class.php';
+require_once __DIR__ . '/rest/dao/ShelterDAO.class.php';
+require_once __DIR__ . '/rest/dao/PetDAO.class.php';
+require_once __DIR__ . '/rest/dao/AdoptionRequestDAO.class.php';
+require_once __DIR__ . '/rest/dao/ReviewDAO.class.php';
 
 echo "<pre>";
 
