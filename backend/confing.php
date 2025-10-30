@@ -3,7 +3,7 @@ class Database {
    private static $host = 'localhost';
    private static $dbName = 'pawpal_system';
    private static $username = 'root';
-   private static $password = 'root1234';
+   private static $password = '';
    private static $connection = null;
 
 
