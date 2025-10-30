@@ -6,6 +6,18 @@ class AdminDao extends BaseDao {
         parent::__construct("admins", "admin_id");
     }
 
+    public function create_admin($admin) {
+        return $this->insert($admin);
+    }
+
+    public function get_admin_by_id($admin_id) {
+        return $this->get_by_id($admin_id);
+    }
+
+    public function get_all_admins() {
+        return $this->get_all();
+    }
+
     public function get_admin_with_user_info($admin_id) {
         return $this->query_unique("
             SELECT a.*, u.full_name, u.email 
@@ -14,4 +26,13 @@ class AdminDao extends BaseDao {
             WHERE a.admin_id = :id
         ", ["id" => $admin_id]);
     }
+
+    public function update_admin($admin_id, $admin) {
+        return $this->update($admin_id, $admin);
+    }
+
+    public function delete_admin($admin_id) {
+        return $this->delete($admin_id);
+    }
 }
+?>

@@ -6,6 +6,18 @@ class ReviewDao extends BaseDao {
         parent::__construct("reviews", "review_id");
     }
 
+    public function create_review($review) {
+        return $this->insert($review);
+    }
+
+    public function get_review_by_id($review_id) {
+        return $this->get_by_id($review_id);
+    }
+
+    public function get_all_reviews() {
+        return $this->get_all();
+    }
+
     public function get_reviews_by_shelter($shelter_id) {
         return $this->query("
             SELECT r.*, u.full_name AS user_name
@@ -23,4 +35,13 @@ class ReviewDao extends BaseDao {
             WHERE shelter_id = :shelter_id
         ", ["shelter_id" => $shelter_id]);
     }
+
+    public function update_review($review_id, $review) {
+        return $this->update($review_id, $review);
+    }
+
+    public function delete_review($review_id) {
+        return $this->delete($review_id);
+    }
 }
+?>
