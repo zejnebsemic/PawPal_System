@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../dao/BaseDao.class.php";
+require_once __DIR__ . "/BaseDao.php";
 
 class ShelterDao extends BaseDao {
     public function __construct() {
@@ -11,11 +11,11 @@ class ShelterDao extends BaseDao {
     }
 
     public function get_shelter_by_id($shelter_id) {
-        return $this->get_by_id($shelter_id);
+        return $this->getById($shelter_id);
     }
 
     public function get_all_shelters() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     public function get_shelters_with_admins() {
@@ -24,7 +24,7 @@ class ShelterDao extends BaseDao {
             FROM shelters s
             LEFT JOIN admins a ON s.admin_id = a.admin_id
             LEFT JOIN users u ON a.user_id = u.user_id
-        ", []);
+        ");
     }
 
     public function get_shelter_by_name($name) {

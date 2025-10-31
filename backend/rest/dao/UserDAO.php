@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../dao/BaseDao.class.php";
+require_once __DIR__ . "/BaseDao.php";
 
 class UserDao extends BaseDao {
     public function __construct() {
@@ -11,11 +11,11 @@ class UserDao extends BaseDao {
     }
 
     public function get_user_by_id($user_id) {
-        return $this->get_by_id($user_id);
+        return $this->getById($user_id);
     }
 
     public function get_all_users() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     public function get_user_by_email($email) {

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../dao/BaseDao.class.php";
+require_once __DIR__ . "/BaseDao.php";
 
 class ReviewDao extends BaseDao {
     public function __construct() {
@@ -11,11 +11,11 @@ class ReviewDao extends BaseDao {
     }
 
     public function get_review_by_id($review_id) {
-        return $this->get_by_id($review_id);
+        return $this->getById($review_id);
     }
 
     public function get_all_reviews() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     public function get_reviews_by_shelter($shelter_id) {

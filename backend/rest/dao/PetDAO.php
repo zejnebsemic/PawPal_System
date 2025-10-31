@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../dao/BaseDao.class.php";
+require_once __DIR__ . "/BaseDao.php";
 
 class PetDao extends BaseDao {
     public function __construct() {
@@ -11,11 +11,11 @@ class PetDao extends BaseDao {
     }
 
     public function get_pet_by_id($pet_id) {
-        return $this->get_by_id($pet_id);
+        return $this->getById($pet_id);
     }
 
     public function get_all_pets() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     public function get_pets_by_shelter($shelter_id) {
@@ -23,7 +23,7 @@ class PetDao extends BaseDao {
     }
 
     public function get_available_pets() {
-        return $this->query("SELECT * FROM pets WHERE availability = 'available'", []);
+        return $this->query("SELECT * FROM pets WHERE availability = 'available'");
     }
 
     public function get_pet_details($pet_id) {

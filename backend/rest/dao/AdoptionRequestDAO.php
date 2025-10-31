@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../dao/BaseDao.class.php";
+require_once __DIR__ . "/BaseDao.php";
 
 class AdoptionRequestDao extends BaseDao {
     public function __construct() {
@@ -11,11 +11,11 @@ class AdoptionRequestDao extends BaseDao {
     }
 
     public function get_request_by_id($request_id) {
-        return $this->get_by_id($request_id);
+        return $this->getById($request_id);
     }
 
     public function get_all_requests() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     public function get_requests_by_user($user_id) {
@@ -29,7 +29,7 @@ class AdoptionRequestDao extends BaseDao {
     }
 
     public function get_pending_requests() {
-        return $this->query("SELECT * FROM adoption_requests WHERE status = 'pending'", []);
+        return $this->query("SELECT * FROM adoption_requests WHERE status = 'pending'");
     }
 
     public function update_request($request_id, $request) {

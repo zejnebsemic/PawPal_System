@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../dao/BaseDao.class.php";
+require_once __DIR__ . "/BaseDao.php";
 
 class AdminDao extends BaseDao {
     public function __construct() {
@@ -11,11 +11,11 @@ class AdminDao extends BaseDao {
     }
 
     public function get_admin_by_id($admin_id) {
-        return $this->get_by_id($admin_id);
+        return $this->getById($admin_id);
     }
 
     public function get_all_admins() {
-        return $this->get_all();
+        return $this->getAll();
     }
 
     public function get_admin_with_user_info($admin_id) {
