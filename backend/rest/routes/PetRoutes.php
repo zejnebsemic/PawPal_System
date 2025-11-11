@@ -173,4 +173,5 @@ Flight::route('PUT /pets/@id', function($id) {
 Flight::route('DELETE /pets/@id', function($id) {
     Flight::json(Flight::petService()->delete_pet($id));
 });
+
 ?>
