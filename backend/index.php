@@ -27,7 +27,7 @@ require_once __DIR__ . '/rest/routes/ReviewRoutes.php';
 require_once __DIR__ . '/rest/routes/AdoptionRequestRoutes.php';
 
 Flight::route('/test', function() {
-    echo "FlightPHP radi!";
+    echo "FlightPHP radi";
 });
 
 
