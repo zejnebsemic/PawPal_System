@@ -11,7 +11,7 @@ use OpenApi\Generator;
 /**
  * Each Media Type object provides schema and examples for the media type identified by its key.
  *
- * @see [Media Type Object](https://spec.openapis.org/oas/v3.1.1.html#media-type-object)
+ * @see [OAI Media Type Object](https://github.com/OAI/OpenAPI-Specification/blob/main/versions/3.1.0.md#media-type-object)
  *
  * @Annotation
  */
@@ -61,7 +61,7 @@ class MediaType extends AbstractAnnotation
      * The encoding object shall only apply to requestBody objects when the media type is multipart or
      * application/x-www-form-urlencoded.
      *
-     * @var Encoding[]
+     * @var array<string,mixed>
      */
     public $encoding = Generator::UNDEFINED;
 
@@ -71,7 +71,6 @@ class MediaType extends AbstractAnnotation
     public static $_nested = [
         Schema::class => 'schema',
         Examples::class => ['examples', 'example'],
-        Encoding::class => ['encoding', 'property'],
         Attachable::class => ['attachables'],
     ];
 

@@ -9,49 +9,18 @@ namespace OpenApi\Processors;
 use OpenApi\Analysis;
 use OpenApi\Annotations as OA;
 use OpenApi\Generator;
-use OpenApi\GeneratorAwareInterface;
-use OpenApi\GeneratorAwareTrait;
 use OpenApi\OpenApiException;
 
 /**
  * Expands PHP enums.
  *
- * Determines <code>schema</code>, <code>enum</code> and <code>type</code>.
+ * Determines `schema`, `enum` and `type`.
  */
-class ExpandEnums implements GeneratorAwareInterface
+class ExpandEnums implements ProcessorInterface
 {
-    use GeneratorAwareTrait;
+    use Concerns\TypesTrait;
 
-    protected ?string $enumNames;
-
-    public function __construct(?string $enumNames = null)
-    {
-        $this->enumNames = $enumNames;
-    }
-
-    public function getEnumNames(): ?string
-    {
-        return $this->enumNames;
-    }
-
-    /**
-     * Specifies the name of the extension variable where backed enum names will be stored.
-     * Set to <code>null</code> to avoid writing backed enum names.
-     *
-     * Example:
-     * <code>->setEnumNames('enumNames')</code> yields:
-     * ```yaml
-     *   x-enumNames:
-     *     - NAME1
-     *     - NAME2
-     * ```
-     */
-    public function setEnumNames(?string $enumNames = null): void
-    {
-        $this->enumNames = $enumNames;
-    }
-
-    public function __invoke(Analysis $analysis): void
+    public function __invoke(Analysis $analysis)
     {
         if (!class_exists('\\ReflectionEnum')) {
             return;
@@ -69,7 +38,7 @@ class ExpandEnums implements GeneratorAwareInterface
         foreach ($schemas as $schema) {
             if ($schema->_context->is('enum')) {
                 $re = new \ReflectionEnum($schema->_context->fullyQualifiedName($schema->_context->enum));
-                $schema->schema = Generator::isDefault($schema->schema) ? $re->getShortName() : $schema->schema;
+                $schema->schema = !Generator::isDefault($schema->schema) ? $schema->schema : $re->getShortName();
 
                 $schemaType = $schema->type;
                 $enumType = null;
@@ -81,20 +50,15 @@ class ExpandEnums implements GeneratorAwareInterface
                 }
 
                 // no (or invalid) schema type means name
-                $useName = Generator::isDefault($schemaType) || ($enumType && $this->generator->getTypeResolver()->native2spec($enumType) != $schemaType);
+                $useName = Generator::isDefault($schemaType) || ($enumType && $this->native2spec($enumType) != $schemaType);
 
-                $schema->enum = array_map(fn (\ReflectionEnumUnitCase $case) => ($useName || !($case instanceof \ReflectionEnumBackedCase)) ? $case->name : $case->getBackingValue(), $re->getCases());
-
-                if ($this->enumNames !== null && !$useName) {
-                    $schemaX = Generator::isDefault($schema->x) ? [] : $schema->x;
-                    $schemaX[$this->enumNames] = array_map(fn (\ReflectionEnumUnitCase $case): string => $case->name, $re->getCases());
-
-                    $schema->x = $schemaX;
-                }
+                $schema->enum = array_map(function ($case) use ($useName) {
+                    return ($useName || !($case instanceof \ReflectionEnumBackedCase)) ? $case->name : $case->getBackingValue();
+                }, $re->getCases());
 
                 $schema->type = $useName ? 'string' : $enumType;
 
-                $this->generator->getTypeResolver()->mapNativeType($schema, $schemaType);
+                $this->mapNativeType($schema, $schemaType);
             }
         }
     }
@@ -122,8 +86,7 @@ class ExpandEnums implements GeneratorAwareInterface
 
                 $cases = [];
 
-                // transform \UnitEnum into individual cases
-                /** @var string|class-string<\UnitEnum> $enum */
+                // transform each Enum cases into UnitEnum
                 foreach ($schema->enum as $enum) {
                     if (is_string($enum) && function_exists('enum_exists') && enum_exists($enum)) {
                         foreach ($enum::cases() as $case) {
@@ -137,7 +100,11 @@ class ExpandEnums implements GeneratorAwareInterface
 
             $enums = [];
             foreach ($cases as $enum) {
-                $enums[] = is_a($enum, \UnitEnum::class) ? $enum->value ?? $enum->name : $enum;
+                if (is_a($enum, \UnitEnum::class)) {
+                    $enums[] = $enum->value ?? $enum->name;
+                } else {
+                    $enums[] = $enum;
+                }
             }
 
             $schema->enum = $enums;

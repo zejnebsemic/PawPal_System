@@ -11,17 +11,18 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Allows to serialize/de-serialize annotations from/to JSON.
+ *
+ * @see https://github.com/zircote/swagger-php
  */
 class Serializer
 {
-    private static array $VALID_ANNOTATIONS = [
+    private static $VALID_ANNOTATIONS = [
         OA\AdditionalProperties::class,
         OA\Attachable::class,
         OA\Components::class,
         OA\Contact::class,
         OA\Delete::class,
         OA\Discriminator::class,
-        OA\Encoding::class,
         OA\Examples::class,
         OA\ExternalDocumentation::class,
         OA\Flow::class,
@@ -70,7 +71,7 @@ class Serializer
      */
     public function deserialize(string $jsonString, string $className): OA\AbstractAnnotation
     {
-        if (!static::isValidAnnotationClass($className)) {
+        if (!$this->isValidAnnotationClass($className)) {
             throw new OpenApiException($className . ' is not defined in OpenApi PHP Annotations');
         }
 
@@ -82,14 +83,14 @@ class Serializer
      */
     public function deserializeFile(string $filename, string $format = 'json', string $className = OA\OpenApi::class): OA\AbstractAnnotation
     {
-        if (!static::isValidAnnotationClass($className)) {
+        if (!$this->isValidAnnotationClass($className)) {
             throw new OpenApiException($className . ' is not a valid OpenApi PHP Annotations');
         }
 
         $contents = file_get_contents($filename);
 
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if ('yaml' === $format || in_array($ext, ['yml', 'yaml'])) {
+        if ('yaml' == $format || in_array($ext, ['yml', 'yaml'])) {
             $contents = json_encode(Yaml::parse($contents));
         }
 

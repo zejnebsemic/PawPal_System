@@ -24,7 +24,6 @@ class Attachable extends AbstractAnnotation
         Contact::class,
         Delete::class,
         Discriminator::class,
-        Encoding::class,
         Examples::class,
         ExternalDocumentation::class,
         Flow::class,
@@ -66,7 +65,7 @@ class Attachable extends AbstractAnnotation
      * Container to allow custom annotations that are limited to a subset of potential parent
      * annotation classes.
      *
-     * @return array<class-string>|null List of valid parent annotation classes. If <code>null</code>, the default nesting rules apply.
+     * @return array<class-string>|null List of valid parent annotation classes. If `null`, the default nesting rules apply.
      */
     public function allowedParents(): ?array
     {
