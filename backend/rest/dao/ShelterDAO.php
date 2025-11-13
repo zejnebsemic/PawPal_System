@@ -38,5 +38,7 @@ class ShelterDao extends BaseDao {
     public function delete_shelter($shelter_id) {
         return $this->delete($shelter_id);
     }
+    public function getConnection() {
+    return $this->connection;}
 }
 ?>

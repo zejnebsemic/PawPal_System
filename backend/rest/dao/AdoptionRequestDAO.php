@@ -39,5 +39,7 @@ class AdoptionRequestDao extends BaseDao {
     public function delete_request($request_id) {
         return $this->delete($request_id);
     }
+    public function getConnection() {
+    return $this->connection;}
 }
 ?>
