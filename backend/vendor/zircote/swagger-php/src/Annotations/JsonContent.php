@@ -6,17 +6,26 @@
 
 namespace OpenApi\Annotations;
 
-use OpenApi\Annotations as OA;
+use OpenApi\Generator;
 
 /**
+ * @Annotation
  * Shorthand for a json response.
  *
- * Use as `@OA\Schema` inside a `Response` and `MediaType`->`'application/json'` will be generated.
- *
- * @Annotation
+ * Use as an Schema inside a Response and the MediaType "application/json" will be generated.
  */
 class JsonContent extends Schema
 {
+    /**
+     * @var object
+     */
+    public $example = Generator::UNDEFINED;
+
+    /**
+     * @var object
+     */
+    public $examples = Generator::UNDEFINED;
+
     /**
      * @inheritdoc
      */

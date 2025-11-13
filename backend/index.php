@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+use OpenApi\Generator;
 
 require 'rest/services/AdminService.php';
 require 'rest/services/UserService.php';
@@ -30,5 +31,11 @@ Flight::route('/test', function() {
     echo "FlightPHP radi";
 });
 
+
+Flight::route('GET /swagger.json', function() {
+    header('Content-Type: application/json');
+    $openapi = Generator::scan([__DIR__ . '/../rest/routes']);
+    echo $openapi->toJson();
+});
 
 Flight::start();

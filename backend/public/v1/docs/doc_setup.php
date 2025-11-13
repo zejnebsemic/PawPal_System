@@ -9,12 +9,10 @@
  *         name="Zejneb Semić"
  *     )
  * )
- *
  * @OA\Server(
  *     url="http://localhost/PawPal_System/backend",
  *     description="API server"
  * )
- *
  * @OA\SecurityScheme(
  *     securityScheme="ApiKey",
  *     type="apiKey",

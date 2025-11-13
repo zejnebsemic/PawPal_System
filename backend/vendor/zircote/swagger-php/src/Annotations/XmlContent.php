@@ -6,17 +6,21 @@
 
 namespace OpenApi\Annotations;
 
-use OpenApi\Annotations as OA;
+use OpenApi\Generator;
 
 /**
+ * @Annotation
  * Shorthand for a xml response.
  *
- * Use as `@OA\Schema` inside a `Response` and `MediaType`->`'application/xml'` will be generated.
- *
- * @Annotation
+ * Use as an Schema inside a Response and the MediaType "application/xml" will be generated.
  */
 class XmlContent extends Schema
 {
+    /**
+     * @var object
+     */
+    public $examples = Generator::UNDEFINED;
+
     /**
      * @inheritdoc
      */

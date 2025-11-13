@@ -1,5 +1,6 @@
 <?php
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -10,8 +11,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.
 }
 
 $openapi = \OpenApi\Generator::scan([
-    __DIR__ . '/doc_setup.php',
-     __DIR__ . '/Users/zejnebsemic/PawPal_System/backend/rest/routes' 
+    '/Users/zejnebsemic/PawPal_System/backend/public/v1/docs/doc_setup.php',
+    '/Users/zejnebsemic/PawPal_System/backend/rest/routes'
 ]);
 header('Content-Type: application/json');
 echo $openapi->toJson();
