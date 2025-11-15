@@ -36,7 +36,7 @@
     window.onload = function() {
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: "/public/v1/docs/swagger.php",
+        url: "swagger.php",
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

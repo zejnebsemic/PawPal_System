@@ -2,7 +2,7 @@
 class Database {
    private static $host = 'localhost';
    private static $dbName = 'pawpal_system';
-   private static $username = 'root';
+   private static $username = 'pawpal';
    private static $password = 'root1234';
    private static $connection = null;
 
@@ -19,7 +19,6 @@ class Database {
                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                    ]
                );
-               echo "Connection finished!";
            } catch (PDOException $e) {
                die("Connection failed: " . $e->getMessage());
            }

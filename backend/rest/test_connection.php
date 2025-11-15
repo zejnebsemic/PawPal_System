@@ -1,11 +1,11 @@
 <?php
-require_once(__DIR__ . "/config.php");
+require_once 'config.php'; 
 
-$connection = Database::connect();
+$conn = Database::connect();
 
-if ($connection) {
-    echo "Connection successful!";
+if ($conn) {
+    echo "Uspješno spojeno na bazu pawpal_system!";
 } else {
-    echo "Connection failed!";
+    echo "Neuspjela konekcija!";
 }
 ?>
