@@ -35,12 +35,16 @@ CREATE TABLE users (
 CREATE TABLE admins (
     admin_id INT NOT NULL AUTO_INCREMENT,
     user_id INT,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     PRIMARY KEY (admin_id),
     INDEX idx_user_id (user_id),
     CONSTRAINT fk_admin_user FOREIGN KEY (user_id)
         REFERENCES users(user_id)
         ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 -- -------------------------------
 -- Table: shelters
