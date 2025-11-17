@@ -29,5 +29,7 @@ class UserDao extends BaseDao {
     public function delete_user($user_id) {
         return $this->delete($user_id);
     }
+    public function getConnection() {
+    return $this->connection;}
 }
 ?>

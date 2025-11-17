@@ -43,5 +43,9 @@ class ReviewDao extends BaseDao {
     public function delete_review($review_id) {
         return $this->delete($review_id);
     }
+
+    public function getConnection() {
+    return $this->connection;}
+    
 }
 ?>

@@ -1,36 +1,31 @@
 <?php
+require_once(__DIR__ . '/../dao/BaseDao.php');
 
-class BaseService
-{
-    protected $dao;
+class BaseService {
+   protected $dao;
 
-    public function __construct($dao)
-    {
-        $this->dao = $dao;
-    }
+   public function __construct($dao) {
+       $this->dao = $dao;
+   }
 
-    public function get_all()
-    {
-        return $this->dao->get_all();
-    }
+   public function getAll() {
+       return $this->dao->getAll();
+   }
 
-    public function get_by_id($id)
-    {
-        return $this->dao->get_by_id($id);
-    }
+   public function getById($id) {
+       return $this->dao->getById($id);
+   }
 
-    public function add($entity)
-    {
-        return $this->dao->add($entity);
-    }
+   public function create($data) {
+       return $this->dao->insert($data);
+   }
 
-    public function update($entity, $id, $id_column = "id")
-    {
-        return $this->dao->update($entity, $id, $id_column);
-    }
+   public function update($id, $data) {
+       return $this->dao->update($id, $data);
+   }
 
-    public function delete($id)
-    {
-        return $this->dao->delete($id);
-    }
+   public function delete($id) {
+       return $this->dao->delete($id);
+   }
 }
+?>

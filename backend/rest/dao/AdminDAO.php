@@ -34,5 +34,7 @@ class AdminDao extends BaseDao {
     public function delete_admin($admin_id) {
         return $this->delete($admin_id);
     }
+     public function getConnection() {
+    return $this->connection;}
 }
 ?>

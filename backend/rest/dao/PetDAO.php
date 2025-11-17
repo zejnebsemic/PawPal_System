@@ -42,5 +42,11 @@ class PetDao extends BaseDao {
     public function delete_pet($pet_id) {
         return $this->delete($pet_id);
     }
+
+    public function getConnection() {
+    return $this->connection;
 }
+
+}
+
 ?>
