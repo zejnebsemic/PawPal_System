@@ -58,7 +58,6 @@ require_once __DIR__ . '/rest/routes/AdoptionRequestRoutes.php';
 require_once __DIR__ . '/rest/routes/AuthRoutes.php';
 require_once __DIR__ . '/rest/routes/RestaurantRoutes.php';
 
-
 Flight::route('/test', function() {
     echo "FlightPHP radi";
 });
