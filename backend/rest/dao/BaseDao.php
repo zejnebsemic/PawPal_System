@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../config.php");
+require_once 'Database.php';
 
 class BaseDao {
     protected $table;
@@ -58,10 +58,9 @@ class BaseDao {
     }
 
     public function query($query, $params = []) {
-    $stmt = $this->connection->prepare($query);
-    $stmt->execute($params);
-    return $stmt->fetchAll();
-}
-
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
 }
 ?>
