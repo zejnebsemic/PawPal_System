@@ -91,6 +91,7 @@ Flight::group('/pets', function() {
      *     path="/pets",
      *     tags={"pets"},
      *     summary="Create a new pet",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -113,6 +114,7 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('POST /', function() {
+         Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::petService()->create_pet($data);
@@ -144,6 +146,7 @@ Flight::group('/pets', function() {
      *     path="/pets/{id}",
      *     tags={"pets"},
      *     summary="Update an existing pet",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -163,12 +166,48 @@ Flight::group('/pets', function() {
      *         description="Pet updated successfully"
      *     ),
      *     @OA\Response(
+     *         response=403,
+     *         description="Forbidden - user doesn't have permission"
+     *     ),
+     *     @OA\Response(
      *         response=500,
      *         description="Internal server error."
      *     )
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
+        
+        $user = Flight::get('user');
+        
+        if ($user->role === Roles::USER) {
+            $pet = Flight::petService()->get_pet_by_id($id);
+            
+            if (!$pet) {
+                Flight::json([
+                    'success' => false,
+                    'error' => "Pet not found."
+                ], 404);
+                return;
+            }
+            
+            $userRequestsResponse = Flight::adoptionRequestService()->get_requests_by_user($user->id);
+            $hasRequestForThisPet = false;
+            
+            if ($userRequestsResponse['success'] && isset($userRequestsResponse['data'])) {
+                foreach ($userRequestsResponse['data'] as $request) {
+                    if ($request['pet_id'] == $id) {
+                        $hasRequestForThisPet = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (!$hasRequestForThisPet) {
+                Flight::halt(403, 'Access denied: You can only update pets you have adoption requests for');
+            }
+        }
+        
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::petService()->update_pet($id, $data);
@@ -200,6 +239,7 @@ Flight::group('/pets', function() {
      *     path="/pets/{id}",
      *     tags={"pets"},
      *     summary="Delete pet by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -218,6 +258,7 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::petService()->delete_pet($id);
 

@@ -183,6 +183,7 @@ Flight::group('/shelters', function() {
      *     path="/shelters",
      *     tags={"shelters"},
      *     summary="Create a new shelter",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -203,6 +204,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('POST /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::shelterService()->create_shelter($data);
@@ -234,6 +236,7 @@ Flight::group('/shelters', function() {
      *     path="/shelters/{id}",
      *     tags={"shelters"},
      *     summary="Update an existing shelter",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -260,6 +263,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::shelterService()->update_shelter($id, $data);
@@ -291,6 +295,7 @@ Flight::group('/shelters', function() {
      *     path="/shelters/{id}",
      *     tags={"shelters"},
      *     summary="Delete shelter by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -309,6 +314,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::shelterService()->delete_shelter($id);
 

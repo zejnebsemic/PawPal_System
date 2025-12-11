@@ -7,11 +7,13 @@ Flight::group('/admin', function() {
      *     path="/admin",
      *     tags={"admin"},
      *     summary="Get all admins",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(response=200, description="List of all admins"),
      *     @OA\Response(response=500, description="Internal server error.")
      * )
      */
     Flight::route('GET /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::adminService()->get_all_admins();
             Flight::json([
@@ -30,6 +32,7 @@ Flight::group('/admin', function() {
      *     path="/admin/{id}",
      *     tags={"admin"},
      *     summary="Get admin by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=1)),
      *     @OA\Response(response=200, description="Admin details"),
      *     @OA\Response(response=404, description="Admin not found"),
@@ -37,6 +40,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::adminService()->get_admin_by_id($id);
             if ($response['success']) {
@@ -56,6 +60,7 @@ Flight::group('/admin', function() {
      *     path="/admin",
      *     tags={"admin"},
      *     summary="Create a new admin",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -70,7 +75,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('POST /', function() {
-        Flight::auth_middleware()->authorizeRole(Roles::ADMIN); // samo ovdje dodano
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::adminService()->create_admin($data);
@@ -87,6 +92,7 @@ Flight::group('/admin', function() {
      *     path="/admin/{id}",
      *     tags={"admin"},
      *     summary="Delete admin by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer", example=1)),
      *     @OA\Response(response=200, description="Admin deleted successfully"),
      *     @OA\Response(response=401, description="Unauthorized"),
@@ -94,7 +100,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
-        Flight::auth_middleware()->authorizeRole(Roles::ADMIN); // samo ovdje dodano
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
         try {
             $response = Flight::adminService()->delete_admin($id);
             Flight::json(['success' => true, 'message' => 'Admin deleted successfully']);
@@ -110,12 +116,13 @@ Flight::group('/admin', function() {
      *     path="/admin/dashboard",
      *     tags={"admin"},
      *     summary="Admin dashboard",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(response=200, description="Admin dashboard message"),
      *     @OA\Response(response=401, description="Unauthorized")
      * )
      */
     Flight::route('GET /dashboard', function() {
-        Flight::auth_middleware()->authorizeRole(Roles::ADMIN); // ovdje je role check
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
         Flight::json(['message' => 'Dobrodošao na Admin dashboard']);
     });
 

@@ -7,11 +7,14 @@ Flight::group('/adoption-requests', function() {
      *     path="/adoption-requests",
      *     tags={"adoption-requests"},
      *     summary="Get all adoption requests",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(response=200, description="List of all adoption requests"),
      *     @OA\Response(response=500, description="Internal server error")
      * )
      */
     Flight::route('GET /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
         $response = Flight::adoptionRequestService()->get_all_requests();
         if ($response['success']) {
             Flight::json($response);
@@ -25,6 +28,7 @@ Flight::group('/adoption-requests', function() {
      *     path="/adoption-requests/{id}",
      *     tags={"adoption-requests"},
      *     summary="Get adoption request by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -37,6 +41,18 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
+        $user = Flight::get('user');
+        
+        $request = Flight::adoptionRequestService()->get_request_by_id($id);
+        if ($user->role !== Roles::ADMIN && 
+            isset($request['data']['user_id']) && 
+            $request['data']['user_id'] != $user->id) {
+            Flight::halt(403, 'Access denied: You can only view your own requests');
+        }
+        
         $response = Flight::adoptionRequestService()->get_request_by_id($id);
         if ($response['success']) {
             Flight::json($response);
@@ -50,6 +66,7 @@ Flight::group('/adoption-requests', function() {
      *     path="/adoption-requests/user/{user_id}",
      *     tags={"adoption-requests"},
      *     summary="Get all adoption requests for a specific user",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="user_id",
      *         in="path",
@@ -62,6 +79,15 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('GET /user/@user_id', function($user_id) {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
+        $user = Flight::get('user');
+        
+        if ($user->role !== Roles::ADMIN && $user->id != $user_id) {
+            Flight::halt(403, 'Access denied: You can only view your own requests');
+        }
+        
         $response = Flight::adoptionRequestService()->get_requests_by_user($user_id);
         if ($response['success']) {
             Flight::json($response);
@@ -69,17 +95,19 @@ Flight::group('/adoption-requests', function() {
             Flight::json(['success' => false, 'error' => $response['error']], 404);
         }
     });
-
     /**
      * @OA\Get(
      *     path="/adoption-requests/pending",
      *     tags={"adoption-requests"},
      *     summary="Get all pending adoption requests",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(response=200, description="List of pending requests"),
      *     @OA\Response(response=500, description="Internal server error")
      * )
      */
     Flight::route('GET /pending', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
         $response = Flight::adoptionRequestService()->get_pending_requests();
         if ($response['success']) {
             Flight::json($response);
@@ -93,6 +121,7 @@ Flight::group('/adoption-requests', function() {
      *     path="/adoption-requests",
      *     tags={"adoption-requests"},
      *     summary="Create a new adoption request",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -106,8 +135,17 @@ Flight::group('/adoption-requests', function() {
      *     @OA\Response(response=500, description="Internal server error")
      * )
      */
-    Flight::route('POST /', function() {
+      Flight::route('POST /', function() {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
         $data = Flight::request()->data->getData();
+        
+        $user = Flight::get('user');
+        if ($user->role !== Roles::ADMIN && isset($data['user_id']) && $data['user_id'] != $user->id) {
+            Flight::halt(403, 'Access denied: You can only create requests for yourself');
+        }
+        
         $response = Flight::adoptionRequestService()->create_request($data);
         if ($response['success']) {
             Flight::json([
@@ -125,6 +163,7 @@ Flight::group('/adoption-requests', function() {
      *     path="/adoption-requests/{id}",
      *     tags={"adoption-requests"},
      *     summary="Update an adoption request",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -143,6 +182,15 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
+        $user = Flight::get('user');
+        
+        if ($user->role !== Roles::ADMIN) {
+            Flight::halt(403, 'Access denied: Only admins can update request status');
+        }
+        
         $data = Flight::request()->data->getData();
         $response = Flight::adoptionRequestService()->update_request($id, $data);
         if ($response['success']) {
@@ -156,11 +204,13 @@ Flight::group('/adoption-requests', function() {
         }
     });
 
+
     /**
      * @OA\Delete(
      *     path="/adoption-requests/{id}",
      *     tags={"adoption-requests"},
      *     summary="Delete an adoption request",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -173,6 +223,18 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
+        $user = Flight::get('user');
+        
+        $request = Flight::adoptionRequestService()->get_request_by_id($id);
+        if ($user->role !== Roles::ADMIN && 
+            isset($request['data']['user_id']) && 
+            $request['data']['user_id'] != $user->id) {
+            Flight::halt(403, 'Access denied: You can only delete your own requests');
+        }
+        
         $response = Flight::adoptionRequestService()->delete_request($id);
         if ($response['success']) {
             Flight::json([
@@ -183,6 +245,5 @@ Flight::group('/adoption-requests', function() {
             Flight::json(['success' => false, 'error' => $response['error']], 500);
         }
     });
-
 });
 ?>

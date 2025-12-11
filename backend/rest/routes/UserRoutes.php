@@ -7,6 +7,7 @@ Flight::group('/users', function() {
      *     path="/users",
      *     tags={"users"},
      *     summary="Get all users",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Response(
      *         response=200,
      *         description="List of all users"
@@ -35,6 +36,7 @@ Flight::group('/users', function() {
      *     path="/users/{id}",
      *     tags={"users"},
      *     summary="Get user by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -57,8 +59,15 @@ Flight::group('/users', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
-        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
-
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
+        $user = Flight::get('user');
+        
+        if ($user->role !== Roles::ADMIN && $user->id != $id) {
+            Flight::halt(403, 'Access denied: You can only view your own profile');
+        }
+        
         try {
             $response = Flight::userService()->get_user_by_id($id);
             Flight::json($response);
@@ -68,6 +77,7 @@ Flight::group('/users', function() {
             Flight::json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     });
+
 
     /**
      * @OA\Get(
@@ -96,7 +106,8 @@ Flight::group('/users', function() {
      * )
      */
     Flight::route('GET /email/@email', function($email) {
-        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
+       Flight::auth_middleware()->verifyToken(Flight::request()->getHeader('Authentication'));
+       Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
 
         try {
             $response = Flight::userService()->get_user_by_email($email);

@@ -187,6 +187,7 @@ Flight::group('/reviews', function() {
      *     path="/reviews",
      *     tags={"reviews"},
      *     summary="Create a new review",
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -208,8 +209,17 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('POST /', function() {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
         try {
             $data = Flight::request()->data->getData();
+            
+            $user = Flight::get('user');
+            if ($user->role !== Roles::ADMIN && isset($data['user_id']) && $data['user_id'] != $user->id) {
+                Flight::halt(403, 'Access denied: You can only create reviews for yourself');
+            }
+            
             $response = Flight::reviewService()->create_review($data);
             if (isset($response['success']) && $response['success']) {
                 Flight::json([
@@ -238,6 +248,7 @@ Flight::group('/reviews', function() {
      *     path="/reviews/{id}",
      *     tags={"reviews"},
      *     summary="Update an existing review",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -262,9 +273,22 @@ Flight::group('/reviews', function() {
      *     )
      * )
      */
-    Flight::route('PUT /@id', function($id) {
+      Flight::route('PUT /@id', function($id) {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
         try {
             $data = Flight::request()->data->getData();
+            
+            $user = Flight::get('user');
+            $review = Flight::reviewService()->get_review_by_id($id);
+            
+            if ($user->role !== Roles::ADMIN && 
+                isset($review['data']['user_id']) && 
+                $review['data']['user_id'] != $user->id) {
+                Flight::halt(403, 'Access denied: You can only update your own reviews');
+            }
+            
             $response = Flight::reviewService()->update_review($id, $data);
             if (isset($response['success']) && $response['success']) {
                 Flight::json([
@@ -293,6 +317,7 @@ Flight::group('/reviews', function() {
      *     path="/reviews/{id}",
      *     tags={"reviews"},
      *     summary="Delete a review by ID",
+     *     security={{"bearerAuth": {}}},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -310,8 +335,20 @@ Flight::group('/reviews', function() {
      *     )
      * )
      */
-    Flight::route('DELETE /@id', function($id) {
+   Flight::route('DELETE /@id', function($id) {
+        $authMiddleware = new AuthMiddleware();
+        $authMiddleware->verifyToken(Flight::request()->getHeader('Authentication'));
+        
         try {
+            $user = Flight::get('user');
+            $review = Flight::reviewService()->get_review_by_id($id);
+            
+            if ($user->role !== Roles::ADMIN && 
+                isset($review['data']['user_id']) && 
+                $review['data']['user_id'] != $user->id) {
+                Flight::halt(403, 'Access denied: You can only delete your own reviews');
+            }
+            
             $response = Flight::reviewService()->delete_review($id);
             if (isset($response['success']) && $response['success']) {
                 Flight::json([
