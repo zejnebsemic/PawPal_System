@@ -24,7 +24,7 @@ let RestClient = {
        beforeSend: function (xhr) {
          xhr.setRequestHeader(
            "Authentication",
-           localStorage.getItem("token")
+           localStorage.getItem("user_token")
          );
        },
        data: data,

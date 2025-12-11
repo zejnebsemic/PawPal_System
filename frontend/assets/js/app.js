@@ -558,4 +558,3 @@ $(document).ready(function() {
     
     updateNavigation();
 });
-

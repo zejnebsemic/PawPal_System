@@ -1,18 +1,18 @@
-let UserService = {
+var UserService = {
     init: function () {
-        console.log("UserService init called");
-        
-        var token = localStorage.getItem("token");
-        if (token && window.location.pathname.includes("login.html")) {
-            window.location.replace("dashboard.html");
+        var token = localStorage.getItem("user_token");
+        if (token && token !== undefined) {
+            this.generateMenuItems();
         }
         
-        $("#login-form").validate({
-            submitHandler: function (form) {
-                var entity = Object.fromEntries(new FormData(form).entries());
-                UserService.login(entity);
-            },
-        });
+        if ($("#login-form").length) {
+            $("#login-form").validate({
+                submitHandler: function (form) {
+                    var entity = Object.fromEntries(new FormData(form).entries());
+                    UserService.login(entity);
+                },
+            });
+        }
         
         if ($("#register-form").length) {
             $("#register-form").validate({
@@ -30,202 +30,117 @@ let UserService = {
     },
     
     login: function (entity) {
-        $.blockUI({ message: '<h3>Logging in...</h3>' });
-        
-        RestClient.post(
-            "/auth/login",
-            entity,
-            function (result) {
-                $.unblockUI();
+        $.ajax({
+            url: Constants.PROJECT_BASE_URL + "auth/login",
+            type: "POST",
+            data: JSON.stringify(entity),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
                 console.log(result);
-                if (result.success) {
-                    localStorage.setItem("token", result.data.token);
-                    localStorage.setItem("user", JSON.stringify(result.data));
-                    toastr.success("Logged in successfully");
-                    window.location.replace("dashboard.html");
-                } else {
-                    toastr.error(result.error || "Login failed");
-                }
+                localStorage.setItem("user_token", result.data.token);
+                localStorage.setItem("user", JSON.stringify(result.data.user));
+                toastr.success("Logged in successfully");
+                
+                UserService.generateMenuItems();
+                window.location.hash = "#home";
             },
-            function (XMLHttpRequest, textStatus, errorThrown) {
-                $.unblockUI();
-                toastr.error(XMLHttpRequest?.responseJSON?.error || XMLHttpRequest.responseText || 'Login failed');
-            }
-        );
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest?.responseText ? XMLHttpRequest.responseText : 'Error');
+            },
+        });
     },
     
     register: function (entity) {
-        $.blockUI({ message: '<h3>Registering...</h3>' });
-        
-        RestClient.post(
-            "/auth/register",
-            entity,
-            function (result) {
-                $.unblockUI();
+        $.ajax({
+            url: Constants.PROJECT_BASE_URL + "auth/register",
+            type: "POST",
+            data: JSON.stringify(entity),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (result) {
                 console.log(result);
-                if (result.success) {
-                    toastr.success("Registration successful! Please login.");
-                    window.location.replace("login.html");
-                } else {
-                    toastr.error(result.error || "Registration failed");
-                }
+                toastr.success("Registration successful! Please login.");
+                window.location.hash = "#login";
             },
-            function (XMLHttpRequest, textStatus, errorThrown) {
-                $.unblockUI();
-                toastr.error(XMLHttpRequest?.responseJSON?.error || XMLHttpRequest.responseText || 'Registration failed');
-            }
-        );
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                toastr.error(XMLHttpRequest?.responseText ? XMLHttpRequest.responseText : 'Error');
+            },
+        });
     },
     
     logout: function () {
-        localStorage.removeItem("token");
+        localStorage.removeItem("user_token");
         localStorage.removeItem("user");
         toastr.success("Logged out successfully");
-        window.location.replace("login.html");
-    },
-    
-    getCurrentUser: function () {
-        const userStr = localStorage.getItem("user");
-        if (!userStr) return null;
-        try {
-            return JSON.parse(userStr);
-        } catch (e) {
-            console.error("Error parsing user data", e);
-            return null;
-        }
-    },
-    
-    getToken: function () {
-        return localStorage.getItem("token");
-    },
-    
-    isAdmin: function () {
-        const user = this.getCurrentUser();
-        return user && user.role === Constants.ADMIN_ROLE;
-    },
-    
-    isLoggedIn: function () {
-        return this.getToken() !== null;
-    },
-    
-    requireAuth: function (redirectUrl = "login.html") {
-        if (!this.isLoggedIn()) {
-            toastr.warning("Please login to continue");
-            window.location.replace(redirectUrl);
-            return false;
-        }
-        return true;
-    },
-    
-    requireAdmin: function (redirectUrl = "dashboard.html") {
-        if (!this.requireAuth()) return false;
-        
-        if (!this.isAdmin()) {
-            toastr.error("Access denied: Admin privileges required");
-            window.location.replace(redirectUrl);
-            return false;
-        }
-        return true;
+        window.location.hash = "#login";
     },
     
     generateMenuItems: function () {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("user_token");
         if (!token) {
-            return [
-                { name: "Home", url: "index.html", icon: "🏠" },
-                { name: "Pets", url: "pets.html", icon: "🐶" },
-                { name: "Shelters", url: "shelters.html", icon: "🏠" },
-                { name: "Login", url: "login.html", icon: "🔐" },
-                { name: "Register", url: "register.html", icon: "📝" }
-            ];
+            $("#nav-login").show();
+            $("#nav-logout").hide();
+            $("#nav-profile").hide();
+            $("#nav-admin").hide();
+            $("#nav-requests").hide();
+            return;
         }
         
         try {
             const user = Utils.parseJwt(token).user;
-            const menuItems = [
-                { name: "Home", url: "dashboard.html", icon: "🏠" },
-                { name: "Pets", url: "pets.html", icon: "🐶" },
-                { name: "Shelters", url: "shelters.html", icon: "🏠" }
-            ];
             
-            if (user.role === Constants.ADMIN_ROLE) {
-                menuItems.push(
-                    { name: "Admin Panel", url: "admin.html", icon: "👑" },
-                    { name: "Users", url: "users.html", icon: "👥" },
-                    { name: "Adoption Requests", url: "adoption-requests.html", icon: "📋" }
-                );
-            } else if (user.role === Constants.USER_ROLE) {
-                menuItems.push(
-                    { name: "My Profile", url: "profile.html?id=" + user.id, icon: "👤" },
-                    { name: "My Requests", url: "my-requests.html", icon: "📋" }
-                );
+            if (user && user.role) {
+                $("#nav-login").hide();
+                $("#nav-logout").show();
+                $("#nav-profile").show();
+                
+                if (user.role === Constants.ADMIN_ROLE) {
+                    $("#nav-admin").show();
+                    $("#nav-requests").hide();
+                } else if (user.role === Constants.USER_ROLE) {
+                    $("#nav-admin").hide();
+                    $("#nav-requests").show();
+                }
             }
-            
-            menuItems.push({ 
-                name: "Logout", 
-                url: "#", 
-                icon: "🚪",
-                onclick: "UserService.logout()",
-                class: "text-danger" 
-            });
-            
-            return menuItems;
-            
         } catch (error) {
             console.error("Error parsing token:", error);
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            return [
-                { name: "Login", url: "login.html", icon: "🔐" }
-            ];
+            this.logout();
         }
     },
     
-    renderMenu: function (containerId = "navbar-menu") {
-        const menuItems = this.generateMenuItems();
-        const nav = document.getElementById(containerId);
+    isLoggedIn: function () {
+        const token = localStorage.getItem("user_token");
+        if (!token) return false;
         
-        if (!nav) {
-            console.error("Menu container not found:", containerId);
-            return;
+        try {
+            const user = Utils.parseJwt(token).user;
+            return user && user.role;
+        } catch (error) {
+            return false;
         }
-        
-        nav.innerHTML = "";
-        
-        menuItems.forEach(item => {
-            const li = document.createElement("li");
-            li.className = "nav-item mx-0 mx-lg-1";
-            
-            if (item.onclick) {
-                li.innerHTML = `
-                    <button class="btn btn-danger ms-3" onclick="${item.onclick}">
-                        ${item.icon || ''} ${item.name}
-                    </button>
-                `;
-            } else {
-                li.innerHTML = `
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded ${item.class || ''}" href="${item.url}">
-                        ${item.icon || ''} ${item.name}
-                    </a>
-                `;
-            }
-            
-            nav.appendChild(li);
-        });
     },
     
-    canAccess: function (requiredRole, resourceOwnerId = null) {
-        if (!this.isLoggedIn()) return false;
+    isAdmin: function () {
+        const token = localStorage.getItem("user_token");
+        if (!token) return false;
         
-        const user = this.getCurrentUser();
-        if (!user) return false;
+        try {
+            const user = Utils.parseJwt(token).user;
+            return user && user.role === Constants.ADMIN_ROLE;
+        } catch (error) {
+            return false;
+        }
+    },
+    
+    getCurrentUser: function () {
+        const token = localStorage.getItem("user_token");
+        if (!token) return null;
         
-        if (user.role === Constants.ADMIN_ROLE) return true;
-        
-        if (requiredRole && user.role !== requiredRole) return false;
-        
-        if (resourceOwnerId && user.id != resourceOwnerId) return false;
-        
-        return true;
+        try {
+            return Utils.parseJwt(token).user;
+        } catch (error) {
+            return null;
+        }
     }
 };
