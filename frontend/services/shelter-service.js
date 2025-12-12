@@ -1,52 +1,141 @@
-var ShelterService = {
-    endpoint: "shelters",
+let ShelterService = {
 
-    getAll: async function (successCallback, errorCallback) {
-        try {
-            const response = await RestClient.get(this.endpoint);
-            response.success ? successCallback(response.data) : errorCallback(response.error);
-        } catch (err) { errorCallback(err); }
+    init: function () {
+
+        $("#addShelterForm").validate({
+            submitHandler: function (form) {
+                let shelter = Object.fromEntries(new FormData(form).entries());
+                ShelterService.addShelter(shelter);
+                form.reset();
+            }
+        });
+
+        $("#editShelterForm").validate({
+            submitHandler: function (form) {
+                let shelter = Object.fromEntries(new FormData(form).entries());
+                ShelterService.updateShelter(shelter);
+            }
+        });
+
+        ShelterService.getAllShelters();
     },
 
-    getById: async function (id, successCallback, errorCallback) {
-        try {
-            const response = await RestClient.get(`${this.endpoint}/${id}`);
-            response.success ? successCallback(response.data) : errorCallback("Shelter not found.");
-        } catch (err) { errorCallback(err); }
+    addShelter: function (shelter) {
+        $.blockUI({ message: '<h3>Processing...</h3>' });
+
+        RestClient.post(
+            "shelters",
+            JSON.stringify(shelter),
+            function () {
+                toastr.success("Shelter added successfully");
+                $.unblockUI();
+                ShelterService.closeModal();
+                ShelterService.getAllShelters();
+            },
+            function (response) {
+                $.unblockUI();
+                toastr.error(response.responseJSON?.error || "Error adding shelter");
+            }
+        );
     },
 
-    getByName: async function (name, successCallback, errorCallback) {
-        try {
-            const response = await RestClient.get(`${this.endpoint}/name/${name}`);
-            response.success ? successCallback(response.data) : errorCallback("Not found.");
-        } catch (err) { errorCallback(err); }
+    getAllShelters: function () {
+        RestClient.get("shelters", function (res) {
+            let data = res.data ?? res;
+
+            Utils.datatable("shelters-table", [
+                { data: 'shelter_id', title: 'ID' },
+                { data: 'name', title: 'Name' },
+                { data: 'location', title: 'Location' },
+                { data: 'admin_name', title: 'Admin' },
+                {
+                    title: "Actions",
+                    render: function (data, type, row) {
+                        return `
+                            <button class="btn btn-primary" onclick="ShelterService.openEditModal('${row.shelter_id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="ShelterService.openDeleteModal('${row.shelter_id}', '${row.name}')">Delete</button>
+                        `;
+                    }
+                }
+            ], data, 10);
+        });
     },
 
-    getWithAdmins: async function (successCallback, errorCallback) {
-        try {
-            const response = await RestClient.get(`${this.endpoint}/admins`);
-            response.success ? successCallback(response.data) : errorCallback("Unable to load.");
-        } catch (err) { errorCallback(err); }
+    getShelterById: function (id) {
+        $.blockUI({ message: '<h3>Loading...</h3>' });
+
+        RestClient.get(
+            "shelters/" + id,
+            function (res) {
+                let s = res.data ?? res;
+
+                $("#edit_shelter_id").val(s.shelter_id);
+                $("#edit_name").val(s.name);
+                $("#edit_location").val(s.location);
+                $("#edit_admin_id").val(s.admin_id);
+
+                $.unblockUI();
+            },
+            function () {
+                $.unblockUI();
+                toastr.error("Cannot load shelter");
+            }
+        );
     },
 
-    create: async function (data, successCallback, errorCallback) {
-        try {
-            const response = await RestClient.post(this.endpoint, data);
-            response.success ? successCallback(response.data) : errorCallback(response.error);
-        } catch (err) { errorCallback(err); }
+    openAddModal: function () {
+        $("#addShelterModal").modal("show");
     },
 
-    update: async function (id, data, successCallback, errorCallback) {
-        try {
-            const response = await RestClient.put(`${this.endpoint}/${id}`, data);
-            response.success ? successCallback(response.data) : errorCallback(response.error);
-        } catch (err) { errorCallback(err); }
+    openEditModal: function (id) {
+        $("#editShelterModal").modal("show");
+        ShelterService.getShelterById(id);
     },
 
-    delete: async function (id, successCallback, errorCallback) {
-        try {
-            const response = await RestClient.delete(`${this.endpoint}/${id}`);
-            response.success ? successCallback() : errorCallback(response.error);
-        } catch (err) { errorCallback(err); }
+    openDeleteModal: function (id, name) {
+        $("#deleteShelterModal").modal("show");
+        $("#delete_shelter_id").val(id);
+        $("#delete-shelter-body").html(`Delete shelter <b>${name}</b>?`);
+    },
+
+    updateShelter: function (shelter) {
+        $.blockUI({ message: '<h3>Updating...</h3>' });
+
+        RestClient.put(
+            "shelters/" + shelter.shelter_id,
+            JSON.stringify(shelter),
+            function () {
+                toastr.success("Shelter updated successfully");
+                $.unblockUI();
+                ShelterService.closeModal();
+                ShelterService.getAllShelters();
+            },
+            function () {
+                $.unblockUI();
+                toastr.error("Cannot update shelter");
+            }
+        );
+    },
+
+    deleteShelter: function () {
+        let id = $("#delete_shelter_id").val();
+
+        RestClient.delete(
+            "shelters/" + id,
+            null,
+            function () {
+                toastr.success("Shelter deleted");
+                ShelterService.closeModal();
+                ShelterService.getAllShelters();
+            },
+            function (response) {
+                toastr.error(response.responseJSON?.error || "Error deleting shelter");
+                ShelterService.closeModal();
+            }
+        );
+    },
+
+    closeModal: function () {
+        $(".modal").modal("hide");
     }
 };

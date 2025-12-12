@@ -1,52 +1,138 @@
-var AdoptionRequestService = {
-    endpoint: "adoption-requests",
+let AdoptionRequestService = {
 
-    getAll: async function (successCallback, errorCallback) {
-        try {
-            const res = await RestClient.get(this.endpoint);
-            res.success ? successCallback(res.data) : errorCallback(res.error);
-        } catch (err) { errorCallback(err); }
+    init: function () {
+
+        $("#addRequestForm").validate({
+            submitHandler: function (form) {
+                let req = Object.fromEntries(new FormData(form).entries());
+                AdoptionRequestService.addRequest(req);
+                form.reset();
+            }
+        });
+
+        $("#editRequestForm").validate({
+            submitHandler: function (form) {
+                let req = Object.fromEntries(new FormData(form).entries());
+                AdoptionRequestService.updateRequest(req);
+            }
+        });
+
+        AdoptionRequestService.getAllRequests();
     },
 
-    getById: async function (id, successCallback, errorCallback) {
-        try {
-            const res = await RestClient.get(`${this.endpoint}/${id}`);
-            res.success ? successCallback(res.data) : errorCallback("Request not found.");
-        } catch (err) { errorCallback(err); }
+    addRequest: function (req) {
+        $.blockUI({ message: '<h3>Processing...</h3>' });
+
+        RestClient.post(
+            "adoption-requests",
+            JSON.stringify(req),
+            function () {
+                toastr.success("Request submitted successfully");
+                $.unblockUI();
+                AdoptionRequestService.closeModal();
+                AdoptionRequestService.getAllRequests();
+            },
+            function (response) {
+                $.unblockUI();
+                toastr.error(response.responseJSON?.error || "Error submitting request");
+            }
+        );
     },
 
-    getByUser: async function (user_id, successCallback, errorCallback) {
-        try {
-            const res = await RestClient.get(`${this.endpoint}/user/${user_id}`);
-            res.success ? successCallback(res.data) : errorCallback(res.error);
-        } catch (err) { errorCallback(err); }
+    getAllRequests: function () {
+        RestClient.get("adoption-requests", function (res) {
+            let data = res.data ?? res;
+
+            Utils.datatable("requests-table", [
+                { data: 'request_id', title: 'ID' },
+                { data: 'user_id', title: 'User' },
+                { data: 'pet_id', title: 'Pet' },
+                { data: 'status', title: 'Status' },
+                {
+                    title: "Actions",
+                    render: function (data, type, row) {
+                        return `
+                            <button class="btn btn-primary" onclick="AdoptionRequestService.openEditModal('${row.request_id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="AdoptionRequestService.openDeleteModal('${row.request_id}')">Delete</button>
+                        `;
+                    }
+                }
+            ], data, 10);
+        });
     },
 
-    getPending: async function (successCallback, errorCallback) {
-        try {
-            const res = await RestClient.get(`${this.endpoint}/pending`);
-            res.success ? successCallback(res.data) : errorCallback(res.error);
-        } catch (err) { errorCallback(err); }
+    getRequestById: function (id) {
+        $.blockUI({ message: '<h3>Loading...</h3>' });
+
+        RestClient.get(
+            "adoption-requests/" + id,
+            function (res) {
+                let r = res.data ?? res;
+
+                $("#edit_request_id").val(r.request_id);
+                $("#edit_status").val(r.status);
+
+                $.unblockUI();
+            },
+            function () {
+                $.unblockUI();
+                toastr.error("Cannot load request");
+            }
+        );
     },
 
-    create: async function (data, successCallback, errorCallback) {
-        try {
-            const res = await RestClient.post(this.endpoint, data);
-            res.success ? successCallback(res.data) : errorCallback(res.error);
-        } catch (err) { errorCallback(err); }
+    openAddModal: function () {
+        $("#addRequestModal").modal("show");
     },
 
-    update: async function (id, data, successCallback, errorCallback) {
-        try {
-            const res = await RestClient.put(`${this.endpoint}/${id}`, data);
-            res.success ? successCallback(res.data) : errorCallback(res.error);
-        } catch (err) { errorCallback(err); }
+    openEditModal: function (id) {
+        $("#editRequestModal").modal("show");
+        AdoptionRequestService.getRequestById(id);
     },
 
-    delete: async function (id, successCallback, errorCallback) {
-        try {
-            const res = await RestClient.delete(`${this.endpoint}/${id}`);
-            res.success ? successCallback() : errorCallback(res.error);
-        } catch (err) { errorCallback(err); }
+    openDeleteModal: function (id) {
+        $("#deleteRequestModal").modal("show");
+        $("#delete_request_id").val(id);
+    },
+
+    updateRequest: function (req) {
+        $.blockUI({ message: '<h3>Updating...</h3>' });
+
+        RestClient.put(
+            "adoption-requests/" + req.request_id,
+            JSON.stringify(req),
+            function () {
+                toastr.success("Request updated successfully");
+                $.unblockUI();
+                AdoptionRequestService.closeModal();
+                AdoptionRequestService.getAllRequests();
+            },
+            function () {
+                $.unblockUI();
+                toastr.error("Cannot update request");
+            }
+        );
+    },
+
+    deleteRequest: function () {
+        let id = $("#delete_request_id").val();
+
+        RestClient.delete(
+            "adoption-requests/" + id,
+            null,
+            function () {
+                toastr.success("Request deleted");
+                AdoptionRequestService.closeModal();
+                AdoptionRequestService.getAllRequests();
+            },
+            function (response) {
+                toastr.error(response.responseJSON?.error || "Error deleting request");
+                AdoptionRequestService.closeModal();
+            }
+        );
+    },
+
+    closeModal: function () {
+        $(".modal").modal("hide");
     }
 };
