@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 Flight::group('/adoption-requests', function() {
 
@@ -12,6 +13,7 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('GET /', function() {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         $response = Flight::adoptionRequestService()->get_all_requests();
         if ($response['success']) {
             Flight::json($response);
@@ -37,6 +39,7 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         $response = Flight::adoptionRequestService()->get_request_by_id($id);
         if ($response['success']) {
             Flight::json($response);
@@ -62,6 +65,7 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('GET /user/@user_id', function($user_id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         $response = Flight::adoptionRequestService()->get_requests_by_user($user_id);
         if ($response['success']) {
             Flight::json($response);
@@ -80,6 +84,7 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('GET /pending', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         $response = Flight::adoptionRequestService()->get_pending_requests();
         if ($response['success']) {
             Flight::json($response);
@@ -107,7 +112,17 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('POST /', function() {
-        $data = Flight::request()->data->getData();
+        Flight::auth_middleware()->authorizeRole(Roles::USER);
+        
+        
+        $rawBody = Flight::request()->getBody();
+        $data = json_decode($rawBody, true);
+        
+        
+        if (json_last_error() !== JSON_ERROR_NONE || empty($data)) {
+            $data = Flight::request()->data->getData();
+        }
+        
         $response = Flight::adoptionRequestService()->create_request($data);
         if ($response['success']) {
             Flight::json([
@@ -143,6 +158,7 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         $data = Flight::request()->data->getData();
         $response = Flight::adoptionRequestService()->update_request($id, $data);
         if ($response['success']) {
@@ -173,6 +189,7 @@ Flight::group('/adoption-requests', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         $response = Flight::adoptionRequestService()->delete_request($id);
         if ($response['success']) {
             Flight::json([

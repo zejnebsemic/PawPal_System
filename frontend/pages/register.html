@@ -12,63 +12,63 @@
 
                         <form id="register-form">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Full Name</label>
+                                <label for="register-name" class="form-label">Full Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-person"></i>
                                     </span>
-                                    <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                                    <input type="text" name="name" id="register-name" class="form-control" placeholder="John Doe" required minlength="2" maxlength="100">
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email Address</label>
+                                <label for="register-email" class="form-label">Email Address</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-envelope"></i>
                                     </span>
-                                    <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                                    <input type="email" name="email" id="register-email" class="form-control" placeholder="your@email.com" required>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Phone Number</label>
+                                <label for="register-phone" class="form-label">Phone Number</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-telephone"></i>
                                     </span>
-                                    <input type="tel" class="form-control" id="phone" placeholder="+1 234 567 8900" required>
+                                    <input type="tel" name="phone" id="register-phone" class="form-control" placeholder="+1 234 567 8900" required minlength="10" maxlength="20">
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
+                                <label for="register-password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-lock"></i>
                                     </span>
-                                    <input type="password" class="form-control" id="password" placeholder="Create a password" required>
+                                    <input type="password" name="password" id="register-password" class="form-control" placeholder="Create a password" required minlength="8" maxlength="20">
                                 </div>
                                 <small class="text-muted">Must be at least 8 characters</small>
                             </div>
 
                             <div class="mb-3">
-                                <label for="confirm-password" class="form-label">Confirm Password</label>
+                                <label for="register-confirm-password" class="form-label">Confirm Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-lock-fill"></i>
                                     </span>
-                                    <input type="password" class="form-control" id="confirm-password" placeholder="Confirm your password" required>
+                                    <input type="password" name="confirm-password" id="register-confirm-password" class="form-control" placeholder="Confirm your password" required minlength="8" maxlength="20">
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="address" class="form-label">Address</label>
+                                <label for="register-address" class="form-label">Address</label>
                                 <div class="input-group">
                                     <span class="input-group-text">
                                         <i class="bi bi-geo-alt"></i>
                                     </span>
-                                    <input type="text" class="form-control" id="address" placeholder="Your address" required>
+                                    <input type="text" name="address" id="register-address" class="form-control" placeholder="Your address" required minlength="5" maxlength="200">
                                 </div>
                             </div>
 

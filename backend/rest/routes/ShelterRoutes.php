@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 Flight::group('/shelters', function() {
 
@@ -18,18 +19,28 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('GET /', function() {
+        
         try {
             $response = Flight::shelterService()->get_all_shelters();
-            Flight::json([
-                'success' => true,
-                'data' => $response
-            ]);
+            
+           
+            if (isset($response['success']) && $response['success']) {
+                Flight::json($response, 200);
+            } else {
+                Flight::json([
+                    'success' => false,
+                    'error' => $response['error'] ?? 'Failed to fetch shelters'
+                ], 500);
+            }
         } catch (PDOException $e) {
+            error_log("ShelterRoutes GET / - PDOException: " . $e->getMessage());
             Flight::json([
                 'success' => false,
                 'error' => "Database error: " . $e->getMessage()
             ], 500);
         } catch (Exception $e) {
+            error_log("ShelterRoutes GET / - Exception: " . $e->getMessage());
+            error_log("ShelterRoutes GET / - Stack trace: " . $e->getTraceAsString());
             Flight::json([
                 'success' => false,
                 'error' => $e->getMessage()
@@ -64,6 +75,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        
         try {
             $response = Flight::shelterService()->get_shelter_by_id($id);
             if (isset($response['success']) && $response['success']) {
@@ -106,6 +118,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('GET /admins', function() {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::shelterService()->get_shelters_with_admins();
             Flight::json([
@@ -152,6 +165,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('GET /name/@name', function($name) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::shelterService()->get_shelter_by_name($name);
             if (isset($response['success']) && $response['success']) {
@@ -203,6 +217,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('POST /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::shelterService()->create_shelter($data);
@@ -260,6 +275,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::shelterService()->update_shelter($id, $data);
@@ -309,6 +325,7 @@ Flight::group('/shelters', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::shelterService()->delete_shelter($id);
 

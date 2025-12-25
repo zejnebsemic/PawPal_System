@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 Flight::group('/reviews', function() {
 
@@ -18,6 +19,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /', function() {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::reviewService()->get_all_reviews();
             if (isset($response['success']) && $response['success']) {
@@ -64,6 +66,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::reviewService()->get_review_by_id($id);
             if (isset($response['success']) && $response['success']) {
@@ -113,6 +116,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /shelter/@shelter_id', function($shelter_id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::reviewService()->get_reviews_by_shelter($shelter_id);
             if (isset($response['success']) && $response['success']) {
@@ -159,6 +163,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /shelter/@shelter_id/average', function($shelter_id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::reviewService()->get_average_rating($shelter_id);
             if (isset($response['success']) && $response['success']) {
@@ -208,8 +213,17 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('POST /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::USER);
         try {
-            $data = Flight::request()->data->getData();
+           
+            $rawBody = Flight::request()->getBody();
+            $data = json_decode($rawBody, true);
+            
+            
+            if (json_last_error() !== JSON_ERROR_NONE || empty($data)) {
+                $data = Flight::request()->data->getData();
+            }
+            
             $response = Flight::reviewService()->create_review($data);
             if (isset($response['success']) && $response['success']) {
                 Flight::json([
@@ -218,7 +232,11 @@ Flight::group('/reviews', function() {
                     'data' => $response['data']
                 ]);
             } else {
-                throw new Exception($response['error'] ?? "Unable to create review.");
+                
+                Flight::json([
+                    'success' => false,
+                    'error' => $response['error'] ?? "Unable to create review."
+                ], 400);
             }
         } catch (PDOException $e) {
             Flight::json([
@@ -226,10 +244,15 @@ Flight::group('/reviews', function() {
                 'error' => "Database error: " . $e->getMessage()
             ], 500);
         } catch (Exception $e) {
+            
+            $statusCode = (strpos($e->getMessage(), 'required') !== false || 
+                          strpos($e->getMessage(), 'Invalid') !== false ||
+                          strpos($e->getMessage(), 'must be') !== false ||
+                          strpos($e->getMessage(), 'cannot exceed') !== false) ? 400 : 500;
             Flight::json([
                 'success' => false,
                 'error' => $e->getMessage()
-            ], 500);
+            ], $statusCode);
         }
     });
 
@@ -263,6 +286,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::reviewService()->update_review($id, $data);
@@ -311,6 +335,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
         try {
             $response = Flight::reviewService()->delete_review($id);
             if (isset($response['success']) && $response['success']) {

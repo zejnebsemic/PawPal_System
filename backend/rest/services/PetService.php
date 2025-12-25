@@ -38,7 +38,11 @@ class PetService extends BaseService {
             $pets = $this->dao->get_all_pets();
             return ['success' => true, 'data' => $pets ?? []];
         } catch (PDOException $e) {
+            error_log("PetService::get_all_pets - PDOException: " . $e->getMessage());
             return ['success' => false, 'error' => "Database error: " . $e->getMessage()];
+        } catch (Exception $e) {
+            error_log("PetService::get_all_pets - Exception: " . $e->getMessage());
+            return ['success' => false, 'error' => "Error: " . $e->getMessage()];
         }
     }
 

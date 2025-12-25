@@ -16,6 +16,10 @@ class BaseService {
        return $this->dao->getById($id);
    }
 
+   public function add($data) {
+        return $this->dao->insert($data);
+    }
+
    public function create($data) {
        return $this->dao->insert($data);
    }

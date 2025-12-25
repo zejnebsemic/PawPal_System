@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 Flight::group('/admin', function() {
 
@@ -12,6 +13,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('GET /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::adminService()->get_all_admins();
             Flight::json([
@@ -37,6 +39,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::adminService()->get_admin_by_id($id);
             if ($response['success']) {
@@ -63,6 +66,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('GET /@id/user-info', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::adminService()->get_admin_with_user_info($id);
             if ($response['success']) {
@@ -95,6 +99,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('POST /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::adminService()->create_admin($data);
@@ -125,6 +130,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::adminService()->update_admin($id, $data);
@@ -151,6 +157,7 @@ Flight::group('/admin', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::adminService()->delete_admin($id);
             if ($response['success']) {

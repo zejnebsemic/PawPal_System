@@ -49,27 +49,27 @@
             <form id="review-form">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">Your Name</label>
-                        <input type="text" class="form-control" placeholder="Enter your name" required>
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required minlength="2" maxlength="100">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Pet Adopted</label>
-                        <input type="text" class="form-control" placeholder="Pet's name" required>
+                        <label for="pet_adopted" class="form-label">Pet Adopted</label>
+                        <input type="text" name="pet_adopted" id="pet_adopted" class="form-control" placeholder="Pet's name" required minlength="1" maxlength="100">
                     </div>
                     <div class="col-12">
                         <label class="form-label">Rating</label>
                         <div class="star-rating fs-3">
-                            <i class="bi bi-star cursor-pointer"></i>
-                            <i class="bi bi-star cursor-pointer"></i>
-                            <i class="bi bi-star cursor-pointer"></i>
-                            <i class="bi bi-star cursor-pointer"></i>
-                            <i class="bi bi-star cursor-pointer"></i>
+                            <i class="bi bi-star cursor-pointer" data-rating="1"></i>
+                            <i class="bi bi-star cursor-pointer" data-rating="2"></i>
+                            <i class="bi bi-star cursor-pointer" data-rating="3"></i>
+                            <i class="bi bi-star cursor-pointer" data-rating="4"></i>
+                            <i class="bi bi-star cursor-pointer" data-rating="5"></i>
                         </div>
-                        <input type="hidden" id="rating-value" value="0">
+                        <input type="hidden" name="rating" id="rating-value" value="0" required>
                     </div>
                     <div class="col-12">
-                        <label class="form-label">Your Review</label>
-                        <textarea class="form-control" rows="4" placeholder="Tell us about your adoption experience..." required></textarea>
+                        <label for="review" class="form-label">Your Review</label>
+                        <textarea name="review" id="review" class="form-control" rows="4" placeholder="Tell us about your adoption experience..." required minlength="5" maxlength="500"></textarea>
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary">
