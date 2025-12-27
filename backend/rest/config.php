@@ -8,27 +8,35 @@ class Config
 {
     public static function DB_NAME()
     {
-        return Config::get_env("DB_NAME", "pawpal_system");
+        
+        return Config::get_env("DB_NAME", "defaultdb");
     }
 
     public static function DB_PORT()
     {
-        return Config::get_env("DB_PORT", 3307);
+        
+        return Config::get_env("DB_PORT", 25060);
     }
 
     public static function DB_USER()
     {
-        return Config::get_env("DB_USER", "root");
+        
+        return Config::get_env("DB_USER", "doadmin");
     }
 
     public static function DB_PASSWORD()
     {
-        return Config::get_env("DB_PASSWORD", "root");
+        
+        return Config::get_env("DB_PASSWORD", "");
     }
 
     public static function DB_HOST()
     {
-        return Config::get_env("DB_HOST", "localhost");
+        
+        return Config::get_env(
+            "DB_HOST",
+            "pawpal-db-do-user-31089678-0.l.db.ondigitalocean.com"
+        );
     }
 
     public static function JWT_SECRET()
@@ -39,7 +47,6 @@ class Config
         );
     }
 
-    
     public static function get_env($name, $default)
     {
         return isset($_ENV[$name]) && trim($_ENV[$name]) !== ""
