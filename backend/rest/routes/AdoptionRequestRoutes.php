@@ -78,7 +78,7 @@ Flight::route('GET /user', function () {
      *         required=true,
      *         @OA\JsonContent(
      *             required={"pet_id"},
-     *             @OA\Property(property="pet_id", type="integer", example=1)
+     *             @OA\Property(property="pet_id", type="integer", example= 1)
      *         )
      *     ),
      *     @OA\Response(response=200, description="Adoption request created"),
