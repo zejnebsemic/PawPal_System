@@ -117,12 +117,10 @@ var UserService = {
    });
  },
  logout: function () {
-   localStorage.removeItem("user");
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
 
-    if (typeof UserService !== "undefined") {
-        UserService.generateMenuItems();
-    }
+    UserService.generateMenuItems();
 
     window.location.hash = "#login";
  },
