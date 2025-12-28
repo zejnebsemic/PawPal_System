@@ -9,7 +9,7 @@ class Config
     public static function DB_NAME()
     {
         
-        return Config::get_env("DB_NAME", "defaultdb");
+        return Config::get_env("DB_NAME", "pawpal_system");
     }
 
     public static function DB_PORT()
@@ -35,7 +35,7 @@ class Config
         
         return Config::get_env(
             "DB_HOST",
-            "pawpal-db-do-user-31089678-0.l.db.ondigitalocean.com"
+            "db-mysql-nyc3-19093-do-user-31089678-0.l.db.ondigitalocean.com"
         );
     }
 
