@@ -117,8 +117,13 @@ var UserService = {
    });
  },
  logout: function () {
-   localStorage.clear();
-    updateNavigation();
+   localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
+    if (typeof UserService !== "undefined") {
+        UserService.generateMenuItems();
+    }
+
     window.location.hash = "#login";
  },
         getCurrentUser: function() {
