@@ -78,17 +78,16 @@ let RequestService = {
      });
    },
    deleteRequest: function(id, callback, error_callback) {
-     if (confirm("Are you sure you want to delete this adoption request?")) {
-       $.blockUI({ message: '<h3>Processing...</h3>' });
-       RestClient.delete("adoption-requests/" + id, null, function(response) {
-         $.unblockUI();
-         toastr.success(response?.message || "Adoption request deleted successfully");
-         if (callback) callback(response);
-       }, function(xhr) {
-         $.unblockUI();
-         toastr.error(xhr?.responseJSON?.error || xhr?.responseJSON?.message || "Failed to delete adoption request");
-         if (error_callback) error_callback(xhr);
-       });
-     }
-   }
+  $.blockUI({ message: '<h3>Processing...</h3>' });
+  RestClient.delete("adoption-requests/" + id, null, function(response) {
+    $.unblockUI();
+    toastr.success(response?.message || "Adoption request deleted successfully");
+    if (callback) callback(response);
+  }, function(xhr) {
+    $.unblockUI();
+    toastr.error(xhr?.responseJSON?.error || xhr?.responseJSON?.message || "Failed to delete adoption request");
+    if (error_callback) error_callback(xhr);
+  });
+}
+
 };
