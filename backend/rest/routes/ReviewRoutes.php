@@ -19,7 +19,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /', function() {
-        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
+        Flight::auth_middleware()->verifyToken();
         try {
             $response = Flight::reviewService()->get_all_reviews();
             if (isset($response['success']) && $response['success']) {
@@ -66,7 +66,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
-        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
+        Flight::auth_middleware()->verifyToken();
         try {
             $response = Flight::reviewService()->get_review_by_id($id);
             if (isset($response['success']) && $response['success']) {
@@ -116,7 +116,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /shelter/@shelter_id', function($shelter_id) {
-        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
+        Flight::auth_middleware()->verifyToken();
         try {
             $response = Flight::reviewService()->get_reviews_by_shelter($shelter_id);
             if (isset($response['success']) && $response['success']) {
@@ -163,7 +163,7 @@ Flight::group('/reviews', function() {
      * )
      */
     Flight::route('GET /shelter/@shelter_id/average', function($shelter_id) {
-        Flight::auth_middleware()->authorizeRoles([Roles::ADMIN, Roles::USER]);
+        Flight::auth_middleware()->verifyToken();
         try {
             $response = Flight::reviewService()->get_average_rating($shelter_id);
             if (isset($response['success']) && $response['success']) {
