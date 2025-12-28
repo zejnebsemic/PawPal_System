@@ -1,6 +1,6 @@
 let RestClient = {
   _buildUrl: function (endpoint) {
-    return Constants.PROJECT_BASE_URL + "/backend/" + endpoint;
+    return Constants.PROJECT_BASE_URL + endpoint;
   },
 
  
