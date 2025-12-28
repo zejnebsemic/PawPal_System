@@ -4,6 +4,26 @@ require_once __DIR__ . '/../../data/roles.php';
 Flight::group('/adoption-requests', function () {
 
     /**
+ * @OA\Get(
+ *     path="/adoption-requests/user",
+ *     tags={"adoption-requests"},
+ *     summary="Get adoption requests for logged-in user",
+ *     @OA\Response(response=200, description="User adoption requests"),
+ *     @OA\Response(response=401, description="Unauthorized")
+ * )
+ */
+Flight::route('GET /user', function () {
+        Flight::auth_middleware()->verifyToken();
+
+        $user = Flight::get('user');
+
+        Flight::json(
+            Flight::adoptionRequestService()
+                ->get_requests_by_user($user->user_id)
+        );
+    });
+
+    /**
      * @OA\Get(
      *     path="/adoption-requests",
      *     tags={"adoption-requests"},
@@ -33,25 +53,7 @@ Flight::group('/adoption-requests', function () {
         Flight::json(Flight::adoptionRequestService()->get_request_by_id($id));
     });
 
-   /**
- * @OA\Get(
- *     path="/adoption-requests/user",
- *     tags={"adoption-requests"},
- *     summary="Get adoption requests for logged-in user",
- *     @OA\Response(response=200, description="User adoption requests"),
- *     @OA\Response(response=401, description="Unauthorized")
- * )
- */
-Flight::route('GET /user', function () {
-        Flight::auth_middleware()->verifyToken();
 
-        $user = Flight::get('user');
-
-        Flight::json(
-            Flight::adoptionRequestService()
-                ->get_requests_by_user($user->user_id)
-        );
-    });
 
 
     /**
