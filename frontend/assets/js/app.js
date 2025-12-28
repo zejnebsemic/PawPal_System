@@ -186,19 +186,27 @@ $(document).ready(function () {
     });
     
     
-    $(window).on('hashchange', function() {
-        if (typeof UserService !== 'undefined') {
-            
-            const currentHash = window.location.hash;
-            if (currentHash !== '#login' && currentHash !== '#register') {
-                if ($("#login-form").length && $("#login-form").data("validator")) {
-                    $("#login-form").validate().destroy();
-                }
-                if ($("#register-form").length && $("#register-form").data("validator")) {
-                    $("#register-form").validate().destroy();
-                }
-                UserService.generateMenuItems();
+    $(window).on('hashchange', function () {
+    if (typeof UserService !== 'undefined') {
+
+        const currentHash = window.location.hash;
+
+        
+        if (currentHash === '#login') {
+            if ($("#login-form").length && $("#login-form").data("validator")) {
+                $("#login-form").validate().destroy();
             }
         }
-    });
+
+        if (currentHash === '#register') {
+            if ($("#register-form").length && $("#register-form").data("validator")) {
+                $("#register-form").validate().destroy();
+            }
+        }
+
+        
+        UserService.generateMenuItems();
+    }
+});
+
 });
