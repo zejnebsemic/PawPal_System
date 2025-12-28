@@ -43,16 +43,16 @@ Flight::group('/adoption-requests', function () {
  * )
  */
 Flight::route('GET /user', function () {
+        Flight::auth_middleware()->verifyToken();
 
-    Flight::auth_middleware()->verifyToken();
+        $user = Flight::get('user');
 
-    $user = Flight::get('user');
+        Flight::json(
+            Flight::adoptionRequestService()
+                ->get_requests_by_user($user->user_id)
+        );
+    });
 
-    Flight::json(
-        Flight::adoptionRequestService()
-            ->get_requests_by_user($user->user_id)
-    );
-});
 
     /**
      * @OA\Get(
@@ -86,17 +86,17 @@ Flight::route('GET /user', function () {
     Flight::route('POST /', function () {
         Flight::auth_middleware()->authorizeRole(Roles::USER);
 
-        $data = Flight::request()->data->getData();
+        $user = Flight::get('user');
 
-        if (empty($data['pet_id'])) {
+        $data = json_decode(Flight::request()->getBody(), true);
+
+        if (!$data || empty($data['pet_id'])) {
             Flight::json([
                 'success' => false,
                 'error' => 'pet_id is required'
             ], 400);
             return;
         }
-
-        $user = Flight::get('user');
 
         $data['user_id'] = $user->user_id;
         $data['status']  = 'pending';
