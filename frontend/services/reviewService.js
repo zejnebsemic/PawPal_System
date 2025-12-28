@@ -42,7 +42,7 @@ let ReviewService = {
          review: {
            required: "Please write your review",
            minlength: "Review must be at least 5 characters",
-           maxlength: "Review cannot exceed 500 characters"
+           maxlength: "Review cannot exceed 500 character"
          }
        },
        submitHandler: function (form) {
