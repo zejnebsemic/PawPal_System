@@ -118,7 +118,8 @@ var UserService = {
  },
  logout: function () {
    localStorage.clear();
-   window.location.hash = "#login";
+    updateNavigation();
+    window.location.hash = "#login";
  },
         getCurrentUser: function() {
    const token = localStorage.getItem("user_token");
