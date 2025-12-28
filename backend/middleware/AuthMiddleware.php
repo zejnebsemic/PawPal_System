@@ -153,9 +153,7 @@ class AuthMiddleware {
            Flight::halt(401, "Invalid token signature");
        } catch (\Exception $e) {
            error_log("AuthMiddleware::verifyToken - JWT decode failed: " . $e->getMessage());
-           error_log("AuthMiddleware::verifyToken - Exception type: " . get_class($e));
-           error_log("AuthMiddleware::verifyToken - Exception trace: " . $e->getTraceAsString());
-           throw $e;
+            Flight::halt(401, "Invalid token");
        }
    }
    public function authorizeRole($requiredRole) {

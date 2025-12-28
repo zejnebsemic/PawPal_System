@@ -9,8 +9,7 @@ let RestClient = {
       "auth/login",
       "auth/register",
       "pets",
-      "shelters",
-      "reviews"
+      "shelters"
     ];
     return publicEndpoints.some(endpoint => url.startsWith(endpoint));
   },
