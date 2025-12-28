@@ -8,32 +8,27 @@ class Config
 {
     public static function DB_NAME()
     {
-        
-        return Config::get_env("DB_NAME", "pawpal_system");
+        return self::get_env("DB_NAME", "pawpal_system");
     }
 
     public static function DB_PORT()
     {
-        
-        return Config::get_env("DB_PORT", 25060);
+        return self::get_env("DB_PORT", 25060);
     }
 
     public static function DB_USER()
     {
-        
-        return Config::get_env("DB_USER", "doadmin");
+        return self::get_env("DB_USER", "doadmin");
     }
 
     public static function DB_PASSWORD()
     {
-        
-        return Config::get_env("DB_PASSWORD", "");
+        return self::get_env("DB_PASSWORD", "");
     }
 
     public static function DB_HOST()
     {
-        
-        return Config::get_env(
+        return self::get_env(
             "DB_HOST",
             "db-mysql-nyc3-19093-do-user-31089678-0.l.db.ondigitalocean.com"
         );
@@ -41,7 +36,7 @@ class Config
 
     public static function JWT_SECRET()
     {
-        return Config::get_env(
+        return self::get_env(
             "JWT_SECRET",
             "pawpal_secret_key_2024_secure_random_string_change_in_production"
         );
@@ -63,21 +58,30 @@ class Database
     {
         if (self::$connection === null) {
             try {
-                $dsn = "mysql:host=" . Config::DB_HOST() .
-                       ";port=" . Config::DB_PORT() .
-                       ";dbname=" . Config::DB_NAME() .
-                       ";charset=utf8mb4";
+                $dsn = "mysql:host=" . Config::DB_HOST()
+                     . ";port=" . Config::DB_PORT()
+                     . ";dbname=" . Config::DB_NAME()
+                     . ";charset=utf8mb4";
+
+                $options = [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false
+                ];
+
+                
+                $caPath = __DIR__ . "/ca-certificate.crt";
+                if (file_exists($caPath)) {
+                    $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
+                }
 
                 self::$connection = new PDO(
                     $dsn,
                     Config::DB_USER(),
                     Config::DB_PASSWORD(),
-                    [
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                        PDO::ATTR_EMULATE_PREPARES => false
-                    ]
+                    $options
                 );
+
             } catch (PDOException $e) {
                 error_log("Database connection failed: " . $e->getMessage());
                 throw new Exception("Database connection failed.");
