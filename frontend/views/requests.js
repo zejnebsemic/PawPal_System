@@ -24,13 +24,9 @@ function initRequestsPage() {
 }
 
 function loadUserRequests() {
-    const user = UserService.getCurrentUser();
-    if (!user) return;
-
-    RequestService.getRequestsByUser(
-        user.user_id,
+    RequestService.getMyRequests(
         function (response) {
-            let requests = Array.isArray(response) ? response : response.data || [];
+            const requests = Array.isArray(response) ? response : response.data || [];
 
             updateStats(requests);
 
@@ -61,37 +57,38 @@ function renderRequests(requests) {
 
     requests.forEach(r => {
         html += `
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="row align-items-center">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row align-items-center">
 
-                    <div class="col-md-8">
-                        <h5 class="fw-bold mb-1">${r.pet_name || 'Pet'}</h5>
-                        <p class="text-muted mb-2">
-                            <i class="bi bi-geo-alt"></i> ${r.shelter_name || 'Shelter'}
-                        </p>
+                        <div class="col-md-8">
+                            <h5 class="fw-bold mb-1">${r.pet_name || 'Pet'}</h5>
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-geo-alt"></i> ${r.shelter_name || 'Shelter'}
+                            </p>
 
-                        <span class="badge bg-${statusColor(r.status)} me-2">
-                            ${capitalize(r.status)}
-                        </span>
+                            <span class="badge bg-${statusColor(r.status)} me-2">
+                                ${capitalize(r.status)}
+                            </span>
 
-                        <small class="text-muted">
-                            Applied on: ${formatDate(r.created_at)}
-                        </small>
+                            <small class="text-muted">
+                                Applied on: ${formatDate(r.created_at)}
+                            </small>
+                        </div>
+
+                        <div class="col-md-4 text-end">
+                            ${r.status === 'pending' ? `
+                                <button class="btn btn-sm btn-outline-danger cancel-request-btn"
+                                        data-request-id="${r.request_id}">
+                                    Cancel Request
+                                </button>
+                            ` : ''}
+                        </div>
+
                     </div>
-
-                    <div class="col-md-4 text-end">
-                        ${r.status === 'pending' ? `
-                            <button class="btn btn-sm btn-outline-danger cancel-request-btn"
-                                    data-request-id="${r.request_id}">
-                                Cancel Request
-                            </button>
-                        ` : ''}
-                    </div>
-
                 </div>
             </div>
-        </div>`;
+        `;
     });
 
     $('#requests-container').html(html);
