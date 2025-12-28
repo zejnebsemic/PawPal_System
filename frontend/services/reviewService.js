@@ -52,7 +52,7 @@ let ReviewService = {
          if (user && user.user_id) {
            const reviewData = {
              user_id: user.user_id,
-             shelter_id: payload.shelter_id || 1,
+             shelter_id: 2,
              rating: payload.rating,
              comment: payload.review
            };
