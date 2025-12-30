@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../../data/roles.php';
 
 Flight::group('/pets', function() {
 
@@ -18,18 +19,28 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('GET /', function() {
+        
         try {
             $response = Flight::petService()->get_all_pets();
-            Flight::json([
-                'success' => true,
-                'data' => $response
-            ]);
+            
+            
+            if (isset($response['success']) && $response['success']) {
+                Flight::json($response, 200);
+            } else {
+                Flight::json([
+                    'success' => false,
+                    'error' => $response['error'] ?? 'Failed to fetch pets'
+                ], 500);
+            }
         } catch (PDOException $e) {
+            error_log("PetRoutes GET / - PDOException: " . $e->getMessage());
             Flight::json([
                 'success' => false,
                 'error' => "Database error: " . $e->getMessage()
             ], 500);
         } catch (Exception $e) {
+            error_log("PetRoutes GET / - Exception: " . $e->getMessage());
+            error_log("PetRoutes GET / - Stack trace: " . $e->getTraceAsString());
             Flight::json([
                 'success' => false,
                 'error' => $e->getMessage()
@@ -60,17 +71,16 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('GET /@id', function($id) {
+        
         try {
             $response = Flight::petService()->get_pet_by_id($id);
-            if ($response) {
-                Flight::json([
-                    'success' => true,
-                    'data' => $response
-                ]);
+           
+            if (isset($response['success']) && $response['success']) {
+                Flight::json($response, 200);
             } else {
                 Flight::json([
                     'success' => false,
-                    'error' => "Pet not found."
+                    'error' => $response['error'] ?? "Pet not found."
                 ], 404);
             }
         } catch (PDOException $e) {
@@ -113,6 +123,7 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('POST /', function() {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::petService()->create_pet($data);
@@ -169,6 +180,7 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('PUT /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $data = Flight::request()->data->getData();
             $response = Flight::petService()->update_pet($id, $data);
@@ -218,6 +230,7 @@ Flight::group('/pets', function() {
      * )
      */
     Flight::route('DELETE /@id', function($id) {
+        Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
         try {
             $response = Flight::petService()->delete_pet($id);
 

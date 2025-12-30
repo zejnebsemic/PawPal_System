@@ -42,7 +42,11 @@ class ShelterService extends BaseService {
             $shelters = $this->dao->get_all_shelters();
             return ['success' => true, 'data' => $shelters ?? []];
         } catch (PDOException $e) {
+            error_log("ShelterService::get_all_shelters - PDOException: " . $e->getMessage());
             return ['success' => false, 'error' => "Database error: " . $e->getMessage()];
+        } catch (Exception $e) {
+            error_log("ShelterService::get_all_shelters - Exception: " . $e->getMessage());
+            return ['success' => false, 'error' => "Error: " . $e->getMessage()];
         }
     }
 

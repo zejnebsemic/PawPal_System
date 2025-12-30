@@ -13,7 +13,7 @@
 
 /**
  * @OA\Server(
- *     url="http://localhost/PawPal_System/backend",
+ *     url="https://plankton-app-yu9b6.ondigitalocean.app",
  *     description="API server"
  * )
  */

@@ -1,29 +1,93 @@
 <?php
-class Database {
-   private static $host = 'localhost';
-   private static $dbName = 'pawpal_system';
-   private static $username = 'pawpal';
-   private static $password = 'root1234';
-   private static $connection = null;
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL ^ (E_NOTICE | E_DEPRECATED));
 
-   public static function connect() {
-       if (self::$connection === null) {
-           try {
-               self::$connection = new PDO(
-                   "mysql:host=" . self::$host . ";dbname=" . self::$dbName,
-                   self::$username,
-                   self::$password,
-                   [
-                       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-                   ]
-               );
-           } catch (PDOException $e) {
-               die("Connection failed: " . $e->getMessage());
-           }
-       }
-       return self::$connection;
-   }
+class Config
+{
+    public static function DB_NAME()
+    {
+        return self::get_env("DB_NAME", "pawpal_system");
+    }
+
+    public static function DB_PORT()
+    {
+        return self::get_env("DB_PORT", 25060);
+    }
+
+    public static function DB_USER()
+    {
+        return self::get_env("DB_USER", "doadmin");
+    }
+
+    public static function DB_PASSWORD()
+    {
+        return self::get_env("DB_PASSWORD", "");
+    }
+
+    public static function DB_HOST()
+    {
+        return self::get_env(
+            "DB_HOST",
+            "db-mysql-nyc3-19093-do-user-31089678-0.l.db.ondigitalocean.com"
+        );
+    }
+
+    public static function JWT_SECRET()
+    {
+        return self::get_env(
+            "JWT_SECRET",
+            "pawpal_secret_key_2024_secure_random_string_change_in_production"
+        );
+    }
+
+    public static function get_env($name, $default)
+    {
+        return isset($_ENV[$name]) && trim($_ENV[$name]) !== ""
+            ? $_ENV[$name]
+            : $default;
+    }
 }
-?>
+
+class Database
+{
+    private static $connection = null;
+
+    public static function connect()
+    {
+        if (self::$connection === null) {
+            try {
+                $dsn = "mysql:host=" . Config::DB_HOST()
+                     . ";port=" . Config::DB_PORT()
+                     . ";dbname=" . Config::DB_NAME()
+                     . ";charset=utf8mb4";
+
+                $options = [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false
+                ];
+
+                
+                $caPath = __DIR__ . "/ca-certificate.crt";
+                if (file_exists($caPath)) {
+                    $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
+                }
+
+                self::$connection = new PDO(
+                    $dsn,
+                    Config::DB_USER(),
+                    Config::DB_PASSWORD(),
+                    $options
+                );
+
+            } catch (PDOException $e) {
+                error_log("Database connection failed: " . $e->getMessage());
+                throw new Exception("Database connection failed.");
+            }
+        }
+
+        return self::$connection;
+    }
+}

@@ -6,7 +6,7 @@
     </div>
 
     <div class="row g-4">
-       
+       <!-- 
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-body text-center">
@@ -32,6 +32,7 @@
                     </div>
                 </div>
             </div>
+            -->
 
            
             <div class="card mt-4">
@@ -64,28 +65,28 @@
                     <form id="profile-form">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Full Name</label>
-                                <input type="text" class="form-control"  required>
+                                <label for="full_name" class="form-label">Full Name</label>
+                                <input type="text" name="full_name" id="full_name" class="form-control" required minlength="2" maxlength="100">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" class="form-control"  required>
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" name="email" id="email" class="form-control" required>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control"  required>
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" class="form-control" required pattern="[0-9+\s\-()]+" minlength="10" maxlength="20">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Date of Birth</label>
-                                <input type="date" class="form-control" >
+                                <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control">
                             </div>
                             <div class="col-12">
-                                <label class="form-label">Address</label>
-                                <input type="text" class="form-control"  required>
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" name="address" id="address" class="form-control" required minlength="5" maxlength="200">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">City</label>
-                                <input type="text" class="form-control" required>
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" name="city" id="city" class="form-control" required minlength="2" maxlength="100">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">State</label>

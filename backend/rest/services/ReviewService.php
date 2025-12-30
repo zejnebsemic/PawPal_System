@@ -11,6 +11,39 @@ class ReviewService extends BaseService {
 
     public function create_review($review) {
         try {
+            
+            if (empty($review['user_id'])) {
+                return ['success' => false, 'error' => 'User ID is required.'];
+            }
+            if (empty($review['rating'])) {
+                return ['success' => false, 'error' => 'Rating is required.'];
+            }
+            if (empty($review['comment'])) {
+                return ['success' => false, 'error' => 'Review comment is required.'];
+            }
+
+            
+            $rating = intval($review['rating']);
+            if ($rating < 1 || $rating > 5) {
+                return ['success' => false, 'error' => 'Rating must be between 1 and 5.'];
+            }
+
+            
+            if (strlen($review['comment']) < 5) {
+                return ['success' => false, 'error' => 'Review comment must be at least 5 characters long.'];
+            }
+            if (strlen($review['comment']) > 500) {
+                return ['success' => false, 'error' => 'Review comment cannot exceed 500 characters.'];
+            }
+
+            
+            if (!is_numeric($review['user_id'])) {
+                return ['success' => false, 'error' => 'Invalid user ID.'];
+            }
+            if (isset($review['shelter_id']) && !is_numeric($review['shelter_id'])) {
+                return ['success' => false, 'error' => 'Invalid shelter ID.'];
+            }
+
             $result = $this->dao->create_review($review);
             if ($result) {
                 $review_id = $this->dao->getConnection()->lastInsertId();

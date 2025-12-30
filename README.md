@@ -31,7 +31,7 @@ The administrator:
     User Management: Access and control user profiles
     Shelter Management: Revise or delete information about partner shelters
 
-
-
- 
-
+The application is deployed from the main branch. 
+Once this PR is merged, the live URLs will reflect the final version.
+URL for backend: https://octopus-app-nq68m.ondigitalocean.app
+URL for frontend: https://seashell-app-aq5un.ondigitalocean.app
